@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact &amp; Location — Château de Huot</title>
+  <meta name="description" content="Find Château de Huot in Roussillon, Provence. Directions, travel information, and contact details for reservations, events, and press.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── PAGE-SPECIFIC: CONTACT ── */
+
+    /* HERO */
+    .contact-hero {
+      background: var(--charcoal);
+      padding: 140px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(197,158,96,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contact-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(197,158,96,0.3), transparent);
+    }
+    .contact-hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .contact-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .contact-hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      color: rgba(250,247,242,0.65);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* GETTING HERE */
+    .getting-here-section {
+      background: var(--cream);
+      padding: 100px 0;
+    }
+    .travel-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .travel-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 36px 32px;
+      border: 1px solid #e8e2d8;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .travel-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+    .travel-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(197,158,96,0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--gold);
+    }
+    .travel-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+    }
+    .travel-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+    .travel-card p:last-child { margin-bottom: 0; }
+    .travel-highlight {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      background: rgba(197,158,96,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-top: 12px;
+    }
+
+    /* MAP */
+    .map-section {
+      background: #f5f2ed;
+      padding: 80px 0;
+    }
+    .map-placeholder {
+      width: 100%;
+      height: 440px;
+      background: linear-gradient(135deg, #1e2a38 0%, #2c3e50 50%, #1a2530 100%);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      margin-top: 0;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+    }
+    /* Subtle topographic pattern */
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 38px,
+          rgba(197,158,96,0.05) 38px,
+          rgba(197,158,96,0.05) 39px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 38px,
+          rgba(197,158,96,0.05) 38px,
+          rgba(197,158,96,0.05) 39px
+        );
+    }
+    /* Subtle terrain curves */
+    .map-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 45% 55%, rgba(197,158,96,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 65% 35%, rgba(255,255,255,0.03) 0%, transparent 60%);
+    }
+    .map-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+    .map-pin {
+      color: var(--gold);
+      filter: drop-shadow(0 4px 16px rgba(197,158,96,0.5));
+      animation: pin-pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pin-pulse {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 4px 16px rgba(197,158,96,0.5)); }
+      50% { transform: translateY(-6px); filter: drop-shadow(0 10px 24px rgba(197,158,96,0.7)); }
+    }
+    .map-label {
+      margin-top: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--cream);
+      text-align: center;
+    }
+    .map-sublabel {
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(250,247,242,0.55);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+    .map-open-btn {
+      margin-top: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: none;
+      padding: 9px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .map-open-btn:hover { background: var(--gold); color: #fff; }
+
+    /* Distance markers */
+    .map-distance {
+      position: absolute;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: rgba(250,247,242,0.55);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    .map-distance::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(197,158,96,0.6);
+      flex-shrink: 0;
+    }
+    .map-dist-gordes  { top: 28%; left: 18%; }
+    .map-dist-roussillon { bottom: 38%; left: 30%; }
+    .map-dist-apt     { top: 32%; right: 16%; }
+    .map-dist-avignon { bottom: 18%; right: 20%; }
+
+    /* Compass */
+    .map-compass {
+      position: absolute;
+      bottom: 20px;
+      left: 24px;
+      width: 44px;
+      height: 44px;
+      z-index: 2;
+      opacity: 0.55;
+    }
+
+    /* WEATHER */
+    .weather-section {
+      background: #fff;
+      padding: 100px 0;
+    }
+    .weather-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 56px;
+    }
+    .season-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .season-card {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 24px 20px;
+      text-align: center;
+      border: 1px solid #e8e2d8;
+    }
+    .season-icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .season-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+    .season-temp {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .season-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      color: #999;
+      margin-top: 4px;
+    }
+    .weather-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 16px;
+    }
+    .weather-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .best-time-card {
+      background: var(--charcoal);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .best-time-card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: rgba(250,247,242,0.85);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .best-time-card strong {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* CONTACT FORM */
+    .contact-form-section {
+      background: var(--cream);
+      padding: 100px 0;
+    }
+    .contact-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 56px;
+    }
+    .contact-form-intro h2 { margin-bottom: 20px; }
+    .contact-form-intro p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .contact-response-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: rgba(197,158,96,0.08);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      margin-top: 28px;
+    }
+    .contact-response-note p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--charcoal);
+      margin: 0;
+    }
+    /* Reuse luxury-form styles */
+    .luxury-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      background: #fff;
+      border: 1.5px solid #e8e2d8;
+      border-radius: 6px;
+      padding: 13px 16px;
+      transition: border-color 0.2s ease;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: #fff;
+      padding-right: 36px;
+    }
+    .btn-submit {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--charcoal);
+      color: var(--cream);
+      border: none;
+      padding: 16px 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      align-self: flex-start;
+    }
+    .btn-submit:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    /* CONTACT DETAILS */
+    .contact-details-section {
+      background: var(--charcoal);
+      padding: 80px 0;
+    }
+    .contact-details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 56px;
+    }
+    .contact-dept {
+      padding: 36px 32px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      transition: background 0.25s ease;
+    }
+    .contact-dept:hover {
+      background: rgba(255,255,255,0.07);
+    }
+    .contact-dept-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(197,158,96,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .contact-dept h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+    .contact-dept p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(250,247,242,0.6);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+    .contact-dept a {
+      color: rgba(250,247,242,0.6);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .contact-dept a:hover {
+      color: var(--gold);
+    }
+    .contact-dept .dept-phone {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .travel-cards { grid-template-columns: 1fr; gap: 20px; }
+      .weather-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-form-grid { grid-template-columns: 1fr; gap: 48px; }
+      .contact-details-grid { grid-template-columns: 1fr; gap: 20px; }
+    }
+    @media (max-width: 768px) {
+      .travel-cards { grid-template-columns: 1fr; }
+      .season-cards { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .map-dist-gordes,
+      .map-dist-roussillon,
+      .map-dist-apt,
+      .map-dist-avignon { font-size: 0.62rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link">My Stay</a>
+        <a href="contact.html" class="nav-link active">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="contact-hero">
+    <div class="container">
+      <p class="contact-hero-eyebrow">Find Us</p>
+      <h1>Getting to<br>Château de Huot</h1>
+      <p class="contact-hero-sub">Nestled between Gordes and Roussillon in the Luberon, Provence — France's most celebrated countryside.</p>
+    </div>
+  </section>
+
+  <!-- GETTING HERE -->
+  <section class="getting-here-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Getting Here</p>
+        <h2>Three ways to arrive</h2>
+        <p class="section-sub">However you choose to travel, we will have a member of the concierge team ready to greet you on arrival.</p>
+      </div>
+
+      <div class="travel-cards gsap-stagger">
+
+        <div class="travel-card reveal">
+          <div class="travel-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.5a4 4 0 01-4 4H6a4 4 0 01-4-4V9.5a4 4 0 014-4h2l2-2h4l2 2h2a4 4 0 014 4v7z"/><circle cx="12" cy="13" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M3 10h4M17 10h4" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+          <h3>By Air</h3>
+          <p><strong style="color:var(--charcoal)">Marseille Provence Airport</strong> — 1 hour 30 minutes by private car. The nearest major gateway, with direct connections from London, Paris, and major European cities.</p>
+          <p><strong style="color:var(--charcoal)">Nice Côte d'Azur Airport</strong> — 2 hours by private car. Excellent intercontinental connections.</p>
+          <span class="travel-highlight">Private helicopter landing pad on site</span>
+        </div>
+
+        <div class="travel-card reveal">
+          <div class="travel-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="12.01" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+          <h3>By Train</h3>
+          <p><strong style="color:var(--charcoal)">Avignon TGV</strong> — 45 minutes by private car. Our preferred arrival point, combining the romance of rail with swift access to the estate.</p>
+          <p><strong style="color:var(--charcoal)">Paris Gare de Lyon to Avignon</strong> — 2 hours 40 minutes by TGV direct. Arguably the most civilised way to begin a Provençal journey.</p>
+          <span class="travel-highlight">Private transfers available — please enquire</span>
+        </div>
+
+        <div class="travel-card reveal">
+          <div class="travel-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="2"/><circle cx="12" cy="21" r="1"/><circle cx="20" cy="21" r="1"/></svg>
+          </div>
+          <h3>By Car</h3>
+          <p><strong style="color:var(--charcoal)">From Aix-en-Provence</strong> — 1 hour via the A51 and D900.</p>
+          <p><strong style="color:var(--charcoal)">From Marseille</strong> — 1 hour 30 minutes via the A7.</p>
+          <p style="margin-top:8px;font-size:0.8rem;color:#888">GPS coordinates: 43.9144° N, 5.2897° E<br>Route de Gordes, 84220 Roussillon</p>
+          <span class="travel-highlight">Valet parking on arrival</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="map-section">
+    <div class="container">
+      <div class="map-placeholder reveal">
+        <!-- Distance markers -->
+        <div class="map-distance map-dist-gordes">Gordes · 8 km</div>
+        <div class="map-distance map-dist-roussillon">Roussillon · 2 km</div>
+        <div class="map-distance map-dist-apt">Apt · 15 km</div>
+        <div class="map-distance map-dist-avignon">Avignon · 50 km</div>
+
+        <!-- Compass -->
+        <svg class="map-compass" viewBox="0 0 44 44" fill="none">
+          <circle cx="22" cy="22" r="21" stroke="rgba(250,247,242,0.2)" stroke-width="1"/>
+          <polygon points="22,4 25,22 22,20 19,22" fill="rgba(197,158,96,0.8)"/>
+          <polygon points="22,40 25,22 22,24 19,22" fill="rgba(250,247,242,0.3)"/>
+          <text x="22" y="10" text-anchor="middle" font-family="Inter,sans-serif" font-size="5" font-weight="600" fill="rgba(197,158,96,0.9)">N</text>
+        </svg>
+
+        <!-- Center pin -->
+        <div class="map-center">
+          <svg class="map-pin" width="56" height="68" viewBox="0 0 56 68" fill="none">
+            <path d="M28 0C12.536 0 0 12.536 0 28c0 21 28 40 28 40S56 49 56 28C56 12.536 43.464 0 28 0z" fill="currentColor" opacity="0.9"/>
+            <circle cx="28" cy="28" r="10" fill="rgba(14,12,8,0.5)"/>
+            <circle cx="28" cy="28" r="4" fill="rgba(14,12,8,0.8)"/>
+          </svg>
+          <p class="map-label">Château de Huot</p>
+          <p class="map-sublabel">Route de Gordes, 84220 Roussillon, Provence</p>
+          <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-open-btn">Open in Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEATHER -->
+  <section class="weather-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Climate</p>
+        <h2>The Provence climate</h2>
+        <p class="section-sub">Provence enjoys more than 300 days of sunshine per year. Every season at the château offers something distinct and beautiful.</p>
+      </div>
+
+      <div class="weather-grid reveal">
+        <div class="season-cards">
+          <div class="season-card">
+            <span class="season-icon">🌸</span>
+            <div class="season-name">Spring</div>
+            <div class="season-temp">18–22°C</div>
+            <div class="season-desc">Wildflowers &amp; mild days</div>
+          </div>
+          <div class="season-card">
+            <span class="season-icon">☀️</span>
+            <div class="season-name">Summer</div>
+            <div class="season-temp">28–35°C</div>
+            <div class="season-desc">Lavender in full bloom</div>
+          </div>
+          <div class="season-card">
+            <span class="season-icon">🍂</span>
+            <div class="season-name">Autumn</div>
+            <div class="season-temp">15–22°C</div>
+            <div class="season-desc">Harvest &amp; truffle season</div>
+          </div>
+          <div class="season-card">
+            <span class="season-icon">❄️</span>
+            <div class="season-name">Winter</div>
+            <div class="season-temp">8–12°C</div>
+            <div class="season-desc">Quiet &amp; atmospheric</div>
+          </div>
+        </div>
+
+        <div class="weather-text">
+          <h3>When to visit</h3>
+          <div class="best-time-card">
+            <p><strong>May and June</strong> for lavender beginning to bloom, comfortable temperatures, and the estate at its most vivid. <strong>September and October</strong> for the vendange — the grape harvest — truffles, and the golden light of the Provençal autumn.</p>
+          </div>
+          <p>The estate is open year-round. Winter brings a quieter, more intimate atmosphere — the spa is especially beautiful in the low light of January, and truffle season peaks through February. In any season, our concierge team curates experiences suited to what Provence offers at that moment.</p>
+          <button class="btn-primary" data-flow="concierge" data-quick="When is the best time to visit Château de Huot?">Ask about the best time to visit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <section class="contact-form-section">
+    <div class="container">
+      <div class="contact-form-grid">
+        <div class="contact-form-intro reveal">
+          <p class="section-label">Reach Us</p>
+          <h2>Send us a message</h2>
+          <p>Whether you are planning a first visit, returning to the estate, or enquiring about a private event, we are here. Every message is read by a member of our team — no automated replies, no wait lists.</p>
+          <p>For urgent matters, please call directly. Our concierge team is available around the clock.</p>
+          <div class="contact-response-note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <p>We respond to all messages within 4 hours</p>
+          </div>
+        </div>
+
+        <form class="luxury-form reveal" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ct-name">Your name</label>
+              <input type="text" id="ct-name" name="name" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label for="ct-email">Email address</label>
+              <input type="email" id="ct-email" name="email" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ct-phone">Phone <span style="font-weight:400;color:#bbb">(optional)</span></label>
+              <input type="tel" id="ct-phone" name="phone" placeholder="+33 6 XX XX XX XX">
+            </div>
+            <div class="form-group">
+              <label for="ct-type">Enquiry type</label>
+              <select id="ct-type" name="type">
+                <option value="" disabled selected>Select type</option>
+                <option>Reservations</option>
+                <option>Events &amp; Weddings</option>
+                <option>Press &amp; Media</option>
+                <option>General Enquiry</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ct-message">Your message</label>
+            <textarea id="ct-message" name="message" placeholder="Tell us how we can help…"></textarea>
+          </div>
+          <button type="button" class="btn-submit" data-flow="support" data-quick="I have a general enquiry about Château de Huot">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT DETAILS -->
+  <section class="contact-details-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label" style="color:var(--gold)">Direct Contact</p>
+        <h2 style="color:var(--cream)">Reach the right person directly</h2>
+      </div>
+
+      <div class="contact-details-grid gsap-stagger">
+
+        <div class="contact-dept reveal">
+          <div class="contact-dept-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Reservations</h3>
+          <p class="dept-phone">+33 4 90 XX XX XX</p>
+          <p><a href="mailto:reservations@chateaudehuot.com">reservations@chateaudehuot.com</a></p>
+          <p style="margin-top:12px">Available 24 hours a day, seven days a week. For same-day enquiries, we recommend calling directly.</p>
+        </div>
+
+        <div class="contact-dept reveal">
+          <div class="contact-dept-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Events &amp; Weddings</h3>
+          <p class="dept-phone">+33 4 90 XX XX XY</p>
+          <p><a href="mailto:events@chateaudehuot.com">events@chateaudehuot.com</a></p>
+          <p style="margin-top:12px">Isabelle Moreau, Events Director. Available Monday to Saturday, 9am–7pm. Initial enquiries responded to within 2 hours on weekdays.</p>
+        </div>
+
+        <div class="contact-dept reveal">
+          <div class="contact-dept-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v2"/><path d="M2 22V8l6-4v18M10 8h8M10 12h8M10 16h8M2 16h2M2 12h2"/></svg>
+          </div>
+          <h3>Press &amp; Media</h3>
+          <p><a href="mailto:press@chateaudehuot.com">press@chateaudehuot.com</a></p>
+          <p style="margin-top:12px">For editorial enquiries, photography permissions, and media visits. Press kit and high-resolution images available upon request.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy · Terms &amp; Conditions</p>
+    </div>
+  </footer>
+
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="booking" data-quick="I'd like to reserve a suite" class="quick-chip">Reserve a suite</button>
+      <button data-flow="dining" data-quick="Book dinner for two" class="quick-chip">Book dinner</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening. I am Élise, your personal concierge at Château de Huot. How may I make your stay exceptional today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+</body>
+</html>

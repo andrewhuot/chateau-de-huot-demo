@@ -1,0 +1,655 @@
+/* ==========================================================================
+   Château de Huot — main.css
+   Brand tokens, reset, typography, layout system
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Google Fonts Import
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties — Brand Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color palette */
+  --gold:           #C9A96E;
+  --gold-light:     #E8D5B0;
+  --gold-dark:      #9E7A4A;
+  --stone:          #E8DDD0;
+  --stone-light:    #F3EDE5;
+  --navy:           #1A2744;
+  --navy-mid:       #243360;
+  --sage:           #7B9E87;
+  --sage-light:     #A8C5B2;
+  --cream:          #FAF7F2;
+  --charcoal:       #2C2C2C;
+
+  /* Typography */
+  --font-heading:   'Playfair Display', Georgia, serif;
+  --font-body:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-caption:   'Cormorant Garamond', Georgia, serif;
+
+  /* Spacing scale */
+  --space-xs:       4px;
+  --space-sm:       8px;
+  --space-md:       16px;
+  --space-lg:       24px;
+  --space-xl:       40px;
+  --space-2xl:      64px;
+  --space-3xl:      100px;
+
+  /* Layout */
+  --max-width:      1280px;
+  --container-pad: 40px;
+
+  /* Radii */
+  --radius:         12px;
+  --radius-lg:      20px;
+  --radius-sm:      6px;
+  --radius-pill:    999px;
+
+  /* Shadows */
+  --shadow:         0 20px 60px rgba(26, 39, 68, 0.15);
+  --shadow-sm:      0 4px 20px rgba(26, 39, 68, 0.08);
+  --shadow-lg:      0 40px 100px rgba(26, 39, 68, 0.22);
+  --shadow-gold:    0 8px 32px rgba(201, 169, 110, 0.3);
+
+  /* Transitions */
+  --transition:     240ms ease;
+  --transition-slow: 500ms ease;
+  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-index scale */
+  --z-base:         1;
+  --z-card:         10;
+  --z-nav:          100;
+  --z-modal:        200;
+  --z-widget:       300;
+  --z-toast:        400;
+}
+
+/* --------------------------------------------------------------------------
+   CSS Reset
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--charcoal);
+  background-color: var(--cream);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+h2 {
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+h6 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--charcoal);
+  font-weight: 400;
+}
+
+.lead {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--charcoal);
+  opacity: 0.85;
+}
+
+/* Cormorant Garamond caption/italic class */
+.italic-caption {
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--charcoal);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* Section label — appears above section headings */
+.section-label {
+  display: block;
+  font-family: var(--font-caption);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+/* Gold text utility */
+.text-gold {
+  color: var(--gold);
+}
+
+/* Navy text utility */
+.text-navy {
+  color: var(--navy);
+}
+
+/* Cream text utility */
+.text-cream {
+  color: var(--cream);
+}
+
+/* Muted text */
+.text-muted {
+  color: var(--charcoal);
+  opacity: 0.6;
+}
+
+/* Centered text */
+.text-center {
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Layout System
+   -------------------------------------------------------------------------- */
+
+.container {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.container--narrow {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.container--wide {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.section {
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
+}
+
+.section--sm {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.section--lg {
+  padding-top: 140px;
+  padding-bottom: 140px;
+}
+
+/* --------------------------------------------------------------------------
+   Grid Utilities
+   -------------------------------------------------------------------------- */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr));
+  gap: 32px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 28px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 24px;
+}
+
+/* Fixed-column grids for intentional layouts */
+.grid-2--fixed {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.grid-3--fixed {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 28px;
+}
+
+/* Flex helpers */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.gap-sm { gap: 8px; }
+.gap-md { gap: 16px; }
+.gap-lg { gap: 24px; }
+.gap-xl { gap: 40px; }
+
+/* --------------------------------------------------------------------------
+   Reveal Animations
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 600ms ease, transform 600ms ease;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal--delay-1 { transition-delay: 100ms; }
+.reveal--delay-2 { transition-delay: 200ms; }
+.reveal--delay-3 { transition-delay: 300ms; }
+.reveal--delay-4 { transition-delay: 400ms; }
+.reveal--delay-5 { transition-delay: 500ms; }
+
+/* --------------------------------------------------------------------------
+   Button System
+   -------------------------------------------------------------------------- */
+
+/* Shared button base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--transition),
+              color var(--transition),
+              border-color var(--transition),
+              transform var(--transition),
+              box-shadow var(--transition);
+  white-space: nowrap;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Primary button — navy background */
+.btn-primary {
+  background-color: var(--navy);
+  color: var(--cream);
+  border-color: var(--navy);
+}
+
+.btn-primary:hover {
+  background-color: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  box-shadow: var(--shadow-gold);
+}
+
+/* Gold button */
+.btn-gold {
+  background-color: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+
+.btn-gold:hover {
+  background-color: var(--gold-dark);
+  border-color: var(--gold-dark);
+  color: var(--cream);
+  box-shadow: var(--shadow-gold);
+}
+
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.btn-outline:hover {
+  background-color: var(--gold);
+  color: var(--navy);
+  box-shadow: var(--shadow-gold);
+}
+
+/* Outline cream (for dark backgrounds) */
+.btn-outline-cream {
+  background-color: transparent;
+  color: var(--cream);
+  border-color: rgba(250, 247, 242, 0.5);
+}
+
+.btn-outline-cream:hover {
+  background-color: var(--cream);
+  color: var(--navy);
+  border-color: var(--cream);
+}
+
+/* Small button modifier */
+.btn--sm {
+  padding: 10px 24px;
+  font-size: 0.75rem;
+}
+
+/* Large button modifier */
+.btn--lg {
+  padding: 18px 44px;
+  font-size: 0.875rem;
+}
+
+/* --------------------------------------------------------------------------
+   Dividers & Decorative Elements
+   -------------------------------------------------------------------------- */
+
+.gold-line {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background-color: var(--gold);
+  margin: 20px auto;
+}
+
+.gold-line--left {
+  margin-left: 0;
+}
+
+.section-header {
+  margin-bottom: 64px;
+}
+
+.section-header--center {
+  text-align: center;
+}
+
+.section-header--center .gold-line {
+  margin: 20px auto;
+}
+
+/* --------------------------------------------------------------------------
+   Utility Classes
+   -------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.overflow-hidden { overflow: hidden; }
+.relative        { position: relative; }
+.absolute        { position: absolute; }
+
+.mb-0  { margin-bottom: 0; }
+.mb-sm { margin-bottom: 8px; }
+.mb-md { margin-bottom: 16px; }
+.mb-lg { margin-bottom: 24px; }
+.mb-xl { margin-bottom: 40px; }
+
+.mt-0  { margin-top: 0; }
+.mt-sm { margin-top: 8px; }
+.mt-md { margin-top: 16px; }
+.mt-lg { margin-top: 24px; }
+.mt-xl { margin-top: 40px; }
+
+/* Aspect ratios */
+.ratio-16-9 {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.ratio-4-3 {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.ratio-square {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+/* Object fit */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   Background Utilities
+   -------------------------------------------------------------------------- */
+
+.bg-cream        { background-color: var(--cream); }
+.bg-stone-light  { background-color: var(--stone-light); }
+.bg-stone        { background-color: var(--stone); }
+.bg-navy         { background-color: var(--navy); color: var(--cream); }
+.bg-navy-mid     { background-color: var(--navy-mid); color: var(--cream); }
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  :root {
+    --container-pad: 32px;
+    --space-3xl: 80px;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  }
+
+  .grid-2--fixed {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3--fixed {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 24px;
+    --space-3xl: 64px;
+  }
+
+  .section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  }
+
+  .grid-3--fixed {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 8vw, 3.5rem);
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .btn {
+    padding: 13px 28px;
+  }
+
+  .section-header {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-pad: 20px;
+  }
+
+  .grid-4 {
+    grid-template-columns: 1fr 1fr;
+  }
+}

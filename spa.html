@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spa &amp; Wellness — Château de Huot</title>
+  <meta name="description" content="3,000 sqm of pure restoration. Thermal pools, ancient stone hammam, and a full ritual menu drawing on the healing botanicals of Provence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ─── Spa page scoped styles ─── */
+
+    /* Hero */
+    .spa-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .spa-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    .spa-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(26, 39, 68, 0.72) 0%,
+        rgba(26, 39, 68, 0.38) 55%,
+        rgba(26, 39, 68, 0.60) 100%
+      );
+    }
+    .spa-hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 740px;
+      padding: 0 40px;
+    }
+    .spa-hero__eyebrow {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--gold-light, #E8D5B0);
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+    }
+    .spa-hero__h1 {
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 40px rgba(26, 39, 68, 0.45);
+    }
+    .spa-hero__subtitle {
+      color: rgba(250, 247, 242, 0.85);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+
+    /* Intro split */
+    .spa-intro {
+      padding: 100px 0;
+    }
+    .spa-intro__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .spa-intro__text h2 {
+      margin-bottom: 24px;
+    }
+    .spa-intro__text p {
+      margin-bottom: 20px;
+      opacity: 0.82;
+      line-height: 1.8;
+    }
+    .spa-intro__image-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .spa-intro__image-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      display: block;
+      transition: transform 700ms ease;
+    }
+    .spa-intro__image-wrap:hover img {
+      transform: scale(1.04);
+    }
+    .spa-intro__badge {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+      background: rgba(26, 39, 68, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(201, 169, 110, 0.45);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .spa-intro__badge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .spa-intro__badge-text {
+      font-size: 0.8125rem;
+      color: var(--cream);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    /* Facilities */
+    .spa-facilities {
+      padding: 100px 0;
+      background-color: var(--stone-light);
+    }
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 56px;
+    }
+    .facility-card {
+      background: #fff;
+      padding: 44px 36px;
+      border: 1px solid transparent;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .facility-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-4px);
+      z-index: 1;
+      position: relative;
+    }
+    .facility-card__icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201, 169, 110, 0.4);
+      background: rgba(201, 169, 110, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+    .facility-card__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .facility-card__desc {
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      opacity: 0.7;
+      line-height: 1.65;
+    }
+
+    /* Treatment tabs */
+    .spa-treatments {
+      padding: 100px 0;
+    }
+    .treatment-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--stone);
+      margin-bottom: 64px;
+    }
+    .treatment-tab {
+      padding: 14px 32px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.5;
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color var(--transition), opacity var(--transition), border-color var(--transition);
+    }
+    .treatment-tab:hover {
+      opacity: 0.8;
+    }
+    .treatment-tab.active {
+      color: var(--navy);
+      opacity: 1;
+      border-bottom-color: var(--gold);
+    }
+    .treatment-panel {
+      display: none;
+    }
+    .treatment-panel.active {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 64px;
+      align-items: start;
+      animation: fadeInUp 400ms ease forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .treatment-panel__image {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: sticky;
+      top: 100px;
+    }
+    .treatment-panel__image img {
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      display: block;
+    }
+    .treatment-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .treatment-card {
+      background: #fff;
+      border: 1px solid var(--stone);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .treatment-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+      transform: translateX(4px);
+    }
+    .treatment-card__info {
+      flex: 1;
+    }
+    .treatment-card__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .treatment-card__desc {
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      opacity: 0.7;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .treatment-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(123, 158, 135, 0.12);
+      color: var(--sage);
+      border: 1px solid rgba(123, 158, 135, 0.3);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .treatment-card__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .treatment-card__price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .btn-book-sm {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 20px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+      background: none;
+      white-space: nowrap;
+    }
+    .btn-book-sm:hover {
+      background-color: var(--gold);
+      color: var(--navy);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* Packages */
+    .spa-packages {
+      padding: 100px 0;
+      background: var(--stone-light);
+    }
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 56px;
+    }
+    .package-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .package-card--featured {
+      border-color: var(--gold);
+    }
+    .package-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+      border-color: var(--gold);
+    }
+    .package-card__header {
+      background: var(--navy);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .package-card--featured .package-card__header {
+      background: linear-gradient(135deg, var(--navy) 0%, #243360 100%);
+    }
+    .package-card__header::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 169, 110, 0.15);
+    }
+    .package-card__badge {
+      display: inline-block;
+      background: rgba(201, 169, 110, 0.15);
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .package-card__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .package-card__price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .package-card__price-note {
+      font-size: 0.8rem;
+      color: rgba(250, 247, 242, 0.45);
+      margin-top: 4px;
+    }
+    .package-card__body {
+      padding: 28px 32px 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .package-card__includes {
+      list-style: none;
+      margin: 0 0 28px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .package-card__includes li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      line-height: 1.5;
+    }
+    .package-card__includes li::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(201, 169, 110, 0.12);
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      flex-shrink: 0;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg width='8' height='6' viewBox='0 0 8 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3l2 2 4-4' stroke='%23C9A96E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .btn-enquire {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 13px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      background: none;
+      transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+    }
+    .btn-enquire:hover,
+    .package-card--featured .btn-enquire {
+      background-color: var(--gold);
+      color: var(--navy);
+      box-shadow: var(--shadow-gold);
+    }
+    .package-card--featured .btn-enquire:hover {
+      background-color: var(--gold-dark);
+      border-color: var(--gold-dark);
+    }
+
+    /* CTA section */
+    .spa-cta {
+      background: var(--navy);
+      padding: 100px 0;
+      text-align: center;
+    }
+    .spa-cta__eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      display: block;
+    }
+    .spa-cta__h2 {
+      color: var(--cream);
+      margin-bottom: 16px;
+    }
+    .spa-cta__hours {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(250, 247, 242, 0.55);
+      margin-bottom: 36px;
+    }
+    .spa-cta__actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .spa-cta__note {
+      font-size: 0.8125rem;
+      color: rgba(250, 247, 242, 0.35);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .btn-primary-cream {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 36px;
+      background: var(--gold);
+      color: var(--navy);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary-cream:hover {
+      background-color: var(--gold-dark);
+      border-color: var(--gold-dark);
+      color: var(--cream);
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-1px);
+    }
+    .btn-outline-cream-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 36px;
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(250, 247, 242, 0.35);
+      border-radius: 2px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+    }
+    .btn-outline-cream-cta:hover {
+      background-color: rgba(250, 247, 242, 0.1);
+      border-color: rgba(250, 247, 242, 0.6);
+      transform: translateY(-1px);
+    }
+
+    /* Nav active state */
+    .nav-link[href="spa.html"] { color: var(--gold) !important; }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .spa-intro__inner { grid-template-columns: 1fr; gap: 48px; }
+      .facilities-grid { grid-template-columns: repeat(2, 1fr); }
+      .treatment-panel.active { grid-template-columns: 1fr; }
+      .treatment-panel__image { position: static; }
+      .treatment-panel__image img { height: 320px; }
+      .packages-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    }
+    @media (max-width: 768px) {
+      .facilities-grid { grid-template-columns: 1fr; }
+      .treatment-tabs { overflow-x: auto; }
+      .treatment-tab { padding: 12px 20px; white-space: nowrap; }
+      .treatment-card { flex-direction: column; }
+      .treatment-card__actions { flex-direction: row; align-items: center; width: 100%; justify-content: space-between; }
+      .spa-intro__image-wrap img { height: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link">My Stay</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- 1. PAGE HERO -->
+  <section class="spa-hero">
+    <img
+      class="spa-hero__bg"
+      src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=85&fit=crop"
+      alt="Château Spa — thermal pool and stone corridors"
+    >
+    <div class="spa-hero__overlay"></div>
+    <div class="spa-hero__content">
+      <span class="spa-hero__eyebrow">Château Spa</span>
+      <h1 class="spa-hero__h1">3,000 sqm of pure restoration</h1>
+      <p class="spa-hero__subtitle">Thermal pools, ancient stone hammam, and a full ritual menu drawing on the healing botanicals of Provence.</p>
+      <button
+        class="btn-primary-cream"
+        data-flow="spa"
+        data-quick="I'd like to book a spa treatment"
+      >Book a Treatment</button>
+    </div>
+  </section>
+
+  <!-- 2. SPA INTRO -->
+  <section class="spa-intro">
+    <div class="container">
+      <div class="spa-intro__inner">
+
+        <!-- Text left -->
+        <div class="spa-intro__text reveal">
+          <span class="section-label">The Philosophy</span>
+          <h2>A space apart</h2>
+          <div class="gold-line gold-line--left" style="margin-top:0;margin-bottom:28px"></div>
+          <p>The Château Spa was conceived as a complete departure from the world beyond our gates. Drawing from a private underground thermal spring, the waters that fill our pools carry centuries of mineral wisdom — warm, restorative, and utterly unlike anything you will encounter elsewhere.</p>
+          <p>Every treatment is built around the ingredients that grow within reach of our walls: hand-harvested lavender from the estate's own fields, wild rosemary from the hillsides above Gordes, thyme gathered at dawn from the garrigue. These are not ingredients chosen for their romance — they are chosen because they work.</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--navy);opacity:0.8;border-left:2px solid var(--gold);padding-left:20px;line-height:1.7">The spa is reserved exclusively for hotel guests, ensuring an atmosphere of genuine intimacy and calm that no day-visit property can replicate.</p>
+        </div>
+
+        <!-- Image right with badge -->
+        <div class="spa-intro__image-wrap reveal reveal--delay-2">
+          <img
+            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80&fit=crop"
+            alt="Château thermal pool at dusk"
+          >
+          <div class="spa-intro__badge">
+            <div class="spa-intro__badge-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="spa-intro__badge-text">For hotel guests only</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FACILITIES GRID -->
+  <section class="spa-facilities">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <span class="section-label" style="display:block;text-align:center">Facilities</span>
+        <h2>Every element of restoration</h2>
+        <div class="gold-line"></div>
+      </div>
+      <div class="facilities-grid gsap-stagger">
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M8 10h.01M16 10h.01"/></svg>
+          </div>
+          <h3 class="facility-card__name">Thermal Pools</h3>
+          <p class="facility-card__desc">Indoor and outdoor pools fed by our private 34°C mineral spring. The water moves — never stagnant, always alive.</p>
+        </div>
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="facility-card__name">Stone Hammam</h3>
+          <p class="facility-card__desc">Traditional hammam hewn from 14th-century stone, infused with eucalyptus steam. An ancient practice in an ancient space.</p>
+        </div>
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3 class="facility-card__name">Himalayan Salt Room</h3>
+          <p class="facility-card__desc">Pink salt walls with programmable chromotherapy lighting. Each 45-minute session yields the respiratory equivalent of three days by the sea.</p>
+        </div>
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <h3 class="facility-card__name">Flotation Pool</h3>
+          <p class="facility-card__desc">Supersaturated salt water in complete silence and near-darkness. A 60-minute float equals eight hours of deep sleep for many guests.</p>
+        </div>
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 6.5h11M6.5 12h11M6.5 17.5h11"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </div>
+          <h3 class="facility-card__name">Fitness Studio</h3>
+          <p class="facility-card__desc">Full Technogym equipment suite with natural light over the lavender fields. Personal training sessions available on request.</p>
+        </div>
+
+        <div class="facility-card">
+          <div class="facility-card__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <h3 class="facility-card__name">Relaxation Lounges</h3>
+          <p class="facility-card__desc">Three firelit lounges with cashmere throws, herbal tea service, and views of the estate. Stay as long as you wish.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. TREATMENT MENU -->
+  <section class="spa-treatments">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Treatments</span>
+        <h2>The ritual menu</h2>
+        <div class="gold-line gold-line--left" style="margin-top:0;margin-bottom:8px"></div>
+        <p style="opacity:0.65;max-width:560px">Each treatment is crafted by our therapists and adapted to you on the day — your skin, your stress, your rhythm.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="treatment-tabs">
+        <button class="treatment-tab active" data-tab="massages">Massages</button>
+        <button class="treatment-tab" data-tab="facials">Facials</button>
+        <button class="treatment-tab" data-tab="body">Body Rituals</button>
+      </div>
+
+      <!-- Panel: Massages -->
+      <div class="treatment-panel active" id="panel-massages">
+        <div class="treatment-panel__image">
+          <img
+            src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80&fit=crop"
+            alt="Spa massage treatment"
+          >
+        </div>
+        <div class="treatment-cards">
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Signature Château Massage</h4>
+              <p class="treatment-card__desc">A full-body journey with warm Provençal lavender and almond oil. Sculpted pressure, deep release, the scent of the estate on your skin.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  90 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€180</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Signature Château Massage">Book</button>
+            </div>
+          </div>
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Deep Tissue &amp; Hot Stone</h4>
+              <p class="treatment-card__desc">Therapeutic deep-tissue work combined with warmed volcanic stones. Designed for guests carrying the weight of a busy world.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  60 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€150</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Deep Tissue massage">Book</button>
+            </div>
+          </div>
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Couples Ritual</h4>
+              <p class="treatment-card__desc">Side-by-side treatment in a private suite with candlelight and champagne service. The most requested experience at the Château Spa.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  120 min
+                </span>
+                <span style="font-size:0.75rem;color:var(--gold);font-weight:500">Most popular</span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€380</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Couples Ritual">Book</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Panel: Facials -->
+      <div class="treatment-panel" id="panel-facials">
+        <div class="treatment-panel__image">
+          <img
+            src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&q=80&fit=crop"
+            alt="Spa facial treatment"
+          >
+        </div>
+        <div class="treatment-cards">
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Riviera Radiance Facial</h4>
+              <p class="treatment-card__desc">A brightening ritual using high-potency Vitamin C and wild botanical extracts sourced from the Ligurian coast. Luminosity, restored.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  60 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€150</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Riviera Radiance Facial">Book</button>
+            </div>
+          </div>
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Anti-Ageing Ritual</h4>
+              <p class="treatment-card__desc">Regeneris technology paired with a marine collagen mask and targeted lymphatic drainage. Clinically-informed, sensationally felt.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  90 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€220</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Anti-Ageing Ritual facial">Book</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Panel: Body Rituals -->
+      <div class="treatment-panel" id="panel-body">
+        <div class="treatment-panel__image">
+          <img
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80&fit=crop"
+            alt="Spa body ritual treatment"
+          >
+        </div>
+        <div class="treatment-cards">
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Provençal Lavender Scrub</h4>
+              <p class="treatment-card__desc">Hand-harvested lavender salt from the estate's fields, worked into the skin in slow circular strokes. Velvet is not a metaphor.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  45 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€120</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Provençal Lavender Scrub">Book</button>
+            </div>
+          </div>
+
+          <div class="treatment-card">
+            <div class="treatment-card__info">
+              <h4 class="treatment-card__name">Detoxifying Clay Wrap</h4>
+              <p class="treatment-card__desc">Provençal mineral clay applied warm and sealed under linen. Rich in trace minerals, drawn from the same Luberon geology as our spring water.</p>
+              <div class="treatment-card__meta">
+                <span class="duration-badge">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  60 min
+                </span>
+              </div>
+            </div>
+            <div class="treatment-card__actions">
+              <span class="treatment-card__price">€145</span>
+              <button class="btn-book-sm" data-flow="spa" data-quick="I'd like to book the Detoxifying Clay Wrap">Book</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. SPA PACKAGES -->
+  <section class="spa-packages">
+    <div class="container">
+      <div class="section-header reveal" style="text-align:center">
+        <span class="section-label" style="display:block;text-align:center">Packages</span>
+        <h2>Complete spa journeys</h2>
+        <div class="gold-line"></div>
+        <p style="opacity:0.65;max-width:520px;margin:0 auto">Curated combinations for those who wish to surrender entirely. Each package may be personalised by your therapist on arrival.</p>
+      </div>
+      <div class="packages-grid gsap-stagger">
+
+        <div class="package-card">
+          <div class="package-card__header">
+            <span class="package-card__badge">Half Day</span>
+            <h3 class="package-card__name">Day of Wellness</h3>
+            <div class="package-card__price">€380</div>
+            <p class="package-card__price-note">per person</p>
+          </div>
+          <div class="package-card__body">
+            <ul class="package-card__includes">
+              <li>3 hours thermal pool &amp; facilities access</li>
+              <li>Signature Château Massage (90 min)</li>
+              <li>Seasonal lunch in the spa garden</li>
+              <li>Herbal tea &amp; seasonal fruit welcome</li>
+            </ul>
+            <button class="btn-enquire" data-flow="spa" data-quick="I'd like to enquire about the Day of Wellness package">Enquire</button>
+          </div>
+        </div>
+
+        <div class="package-card package-card--featured">
+          <div class="package-card__header">
+            <span class="package-card__badge">Most Requested</span>
+            <h3 class="package-card__name">Couples Escape</h3>
+            <div class="package-card__price">€680</div>
+            <p class="package-card__price-note">for two</p>
+          </div>
+          <div class="package-card__body">
+            <ul class="package-card__includes">
+              <li>Private couples suite for the day</li>
+              <li>Couples Ritual massage (120 min)</li>
+              <li>Full thermal access, hammam included</li>
+              <li>Champagne &amp; macarons on arrival</li>
+              <li>Provençal aperitif at sunset</li>
+            </ul>
+            <button class="btn-enquire" data-flow="spa" data-quick="I'd like to enquire about the Couples Escape package">Enquire</button>
+          </div>
+        </div>
+
+        <div class="package-card">
+          <div class="package-card__header">
+            <span class="package-card__badge">Full Day</span>
+            <h3 class="package-card__name">The Full Château</h3>
+            <div class="package-card__price">€950</div>
+            <p class="package-card__price-note">per person</p>
+          </div>
+          <div class="package-card__body">
+            <ul class="package-card__includes">
+              <li>Full day access to all spa facilities</li>
+              <li>Two treatments of your choice</li>
+              <li>Spa lunch &amp; afternoon tisane service</li>
+              <li>Private relaxation lounge reserved</li>
+              <li>Four-course dinner at La Vérrière</li>
+            </ul>
+            <button class="btn-enquire" data-flow="spa" data-quick="I'd like to enquire about The Full Château package">Enquire</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CTA SECTION -->
+  <section class="spa-cta">
+    <div class="container">
+      <span class="spa-cta__eyebrow reveal">Spa &amp; Wellness</span>
+      <h2 class="spa-cta__h2 reveal">Your treatment awaits</h2>
+      <p class="spa-cta__hours reveal">Open daily · 8:00 — 22:00</p>
+      <div class="spa-cta__actions reveal">
+        <button
+          class="btn-primary-cream"
+          data-flow="spa"
+          data-quick="I'd like to reserve a spa treatment"
+        >Reserve a Treatment</button>
+        <button
+          class="btn-outline-cream-cta"
+          data-flow="spa"
+          data-quick="Tell me more about the spa packages"
+        >View All Packages</button>
+      </div>
+      <p class="spa-cta__note reveal">Exclusive to Château de Huot guests</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge" style="margin-top:20px">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+          <a href="contact.html">Press Enquiries</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy · Terms &amp; Conditions · Cookie Settings</p>
+    </div>
+  </footer>
+
+  <!-- CHAT WIDGET -->
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="booking" data-quick="I'd like to reserve a suite" class="quick-chip">Reserve a suite</button>
+      <button data-flow="dining" data-quick="Book dinner for two" class="quick-chip">Book dinner</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening. I am Élise, your personal concierge at Château de Huot. How may I make your stay exceptional today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+  <script>
+    // Treatment tabs
+    (function () {
+      const tabs = document.querySelectorAll('.treatment-tab');
+      const panels = document.querySelectorAll('.treatment-panel');
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) { t.classList.remove('active'); });
+          panels.forEach(function(p) { p.classList.remove('active'); });
+          tab.classList.add('active');
+          var panelId = 'panel-' + tab.dataset.tab;
+          var panel = document.getElementById(panelId);
+          if (panel) panel.classList.add('active');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

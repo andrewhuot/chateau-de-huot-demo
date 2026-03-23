@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dining — Château de Huot</title>
+  <meta name="description" content="La Vérrière — two Michelin stars, Chef Émile Renard's celebrated Provençal cuisine, an 4,200-bottle wine cellar, and private dining on the terrace above the lavender fields.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── Page hero (70vh) ──────────────────────────────────────────────── */
+    .dining-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dining-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      transform: scale(1.05);
+      transition: transform 1.4s ease;
+    }
+    .dining-hero.loaded .dining-hero__bg { transform: scale(1); }
+    .dining-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(26,39,68,.75) 0%, rgba(26,39,68,.4) 50%, rgba(26,39,68,.75) 100%);
+    }
+    .dining-hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px;
+      padding: 0 40px;
+    }
+    .dining-hero__content h1 {
+      color: var(--cream);
+      font-weight: 400;
+      margin: 14px 0 22px;
+      text-shadow: 0 2px 40px rgba(26,39,68,.5);
+    }
+    .dining-hero__content .lead {
+      color: rgba(250,247,242,.85);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      font-size: 1.05rem;
+    }
+
+    /* ── Shared section utility ─────────────────────────────────────────  */
+    .gold-rule { display:block; width:48px; height:1px; background:var(--gold); margin:16px 0; }
+    .gold-rule--center { margin:16px auto; }
+    .section-sub { font-size:.95rem; color:var(--charcoal); opacity:.7; line-height:1.75; margin-top:12px; }
+
+    /* ── Restaurant Profile (2-col) ──────────────────────────────────── */
+    .restaurant-section { padding: var(--space-3xl) 0; background: var(--cream); }
+    .restaurant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .restaurant-text .section-label { margin-bottom: 10px; }
+    .restaurant-text h2 { font-size: clamp(1.8rem, 2.8vw, 2.5rem); margin-bottom: 20px; }
+    .restaurant-text p {
+      font-size: .94rem;
+      line-height: 1.8;
+      color: var(--charcoal);
+      opacity: .8;
+      margin-bottom: 18px;
+    }
+    .restaurant-text p:last-child { margin-bottom: 0; }
+    .restaurant-img-col { position: relative; }
+    .restaurant-img-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .restaurant-img-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      display: block;
+      transition: transform 700ms ease;
+    }
+    .restaurant-img-wrap:hover img { transform: scale(1.03); }
+    .restaurant-badges {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .award-badge {
+      background: var(--navy);
+      color: var(--gold);
+      font-family: var(--font-heading);
+      font-size: .8rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(26,39,68,.3);
+      letter-spacing: .04em;
+    }
+    .awards-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+    .award-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: 1px solid var(--stone);
+      border-radius: var(--radius-sm);
+      background: var(--stone-light);
+    }
+    .award-pill__icon {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .award-pill__text {
+      font-size: .8rem;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: .04em;
+    }
+    .award-pill__sub {
+      font-size: .7rem;
+      color: var(--charcoal);
+      opacity: .55;
+    }
+
+    /* ── Chef Bio ─────────────────────────────────────────────────────── */
+    .chef-section {
+      padding: var(--space-3xl) 0;
+      background: var(--stone-light);
+      position: relative;
+      overflow: hidden;
+    }
+    .chef-section::before {
+      content: '"';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-caption);
+      font-size: 28rem;
+      color: var(--stone);
+      opacity: .4;
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .chef-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .chef-portrait-wrap {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 28px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 0 8px rgba(201,169,110,.12);
+    }
+    .chef-portrait-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+    .chef-inner h2 {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .chef-title {
+      font-family: var(--font-caption);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: .06em;
+      margin-bottom: 28px;
+    }
+    .chef-bio p {
+      font-size: .95rem;
+      color: var(--charcoal);
+      opacity: .78;
+      line-height: 1.82;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .chef-quote {
+      font-family: var(--font-caption);
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--navy);
+      line-height: 1.5;
+      margin-top: 32px;
+      padding: 28px 0;
+      border-top: 1px solid rgba(201,169,110,.3);
+      border-bottom: 1px solid rgba(201,169,110,.3);
+    }
+    .chef-quote cite {
+      display: block;
+      font-style: normal;
+      font-family: var(--font-body);
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 14px;
+    }
+
+    /* ── Menu Preview ─────────────────────────────────────────────────── */
+    .menu-section {
+      padding: var(--space-3xl) 0;
+      background: var(--cream);
+    }
+    .menu-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--stone);
+      margin-bottom: 48px;
+    }
+    .menu-tab {
+      padding: 14px 28px;
+      font-family: var(--font-body);
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: .5;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: color var(--transition), opacity var(--transition), border-color var(--transition);
+    }
+    .menu-tab:hover { opacity: .8; color: var(--navy); }
+    .menu-tab.active {
+      color: var(--navy);
+      opacity: 1;
+      border-bottom-color: var(--gold);
+    }
+    .menu-pane { display: none; }
+    .menu-pane.active { display: block; }
+    .menu-header-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .menu-header-row h3 {
+      font-size: 1.3rem;
+      color: var(--navy);
+    }
+    .menu-price-tag {
+      font-family: var(--font-caption);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: .04em;
+    }
+    .menu-courses {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .menu-course-card {
+      background: var(--stone-light);
+      border: 1px solid var(--stone);
+      border-radius: var(--radius-sm);
+      padding: 20px 22px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .menu-course-card:hover {
+      border-color: var(--gold);
+      box-shadow: var(--shadow-sm);
+    }
+    .menu-course-card.featured {
+      background: var(--navy);
+      border-color: var(--navy);
+      grid-column: span 2;
+    }
+    .course-label {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .course-name {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .menu-course-card.featured .course-name { color: var(--cream); }
+    .course-desc {
+      font-size: .83rem;
+      color: var(--charcoal);
+      opacity: .68;
+      line-height: 1.65;
+    }
+    .menu-course-card.featured .course-desc { color: rgba(250,247,242,.62); opacity: 1; }
+    .wine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .wine-card {
+      background: var(--stone-light);
+      border: 1px solid var(--stone);
+      border-radius: var(--radius-sm);
+      padding: 22px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .wine-card:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); }
+    .wine-card__region {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 8px;
+    }
+    .wine-card__name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .wine-card__vintage {
+      font-size: .78rem;
+      color: var(--charcoal);
+      opacity: .55;
+      margin-bottom: 12px;
+    }
+    .wine-card__price {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+    .menu-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid var(--stone);
+      flex-wrap: wrap;
+    }
+    .btn-link {
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: .55;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color var(--transition), opacity var(--transition);
+      padding: 0;
+      text-decoration: none;
+    }
+    .btn-link:hover { color: var(--gold); opacity: 1; }
+
+    /* ── Private Dining ───────────────────────────────────────────────── */
+    .private-dining-section { padding: var(--space-3xl) 0; background: var(--stone-light); }
+    .private-dining-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .private-dining-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .private-dining-img img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      transition: transform 700ms ease;
+    }
+    .private-dining-img:hover img { transform: scale(1.03); }
+    .private-dining-text .section-label { margin-bottom: 10px; }
+    .private-dining-text h2 { font-size: clamp(1.7rem, 2.5vw, 2.3rem); margin-bottom: 16px; }
+    .private-dining-text p {
+      font-size: .94rem;
+      line-height: 1.8;
+      color: var(--charcoal);
+      opacity: .78;
+      margin-bottom: 16px;
+    }
+    .private-dining-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-top: 1px solid var(--stone);
+    }
+    .private-dining-detail:last-of-type { border-bottom: 1px solid var(--stone); margin-bottom: 28px; }
+    .private-dining-detail__icon { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+    .private-dining-detail__label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: .5;
+      margin-bottom: 2px;
+    }
+    .private-dining-detail__val {
+      font-size: .88rem;
+      color: var(--charcoal);
+      line-height: 1.55;
+    }
+
+    /* ── Reservation CTA (navy) ───────────────────────────────────────── */
+    .reservation-cta {
+      background: var(--navy);
+      padding: var(--space-3xl) 0;
+    }
+    .reservation-cta-inner {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .reservation-cta-inner h2 { color: var(--cream); margin-bottom: 8px; }
+    .reservation-cta-inner .italic-caption {
+      color: rgba(250,247,242,.7);
+      font-size: 1.1rem;
+      margin-bottom: 28px;
+      display: block;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .hour-item {
+      text-align: center;
+    }
+    .hour-item__service {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .hour-item__time {
+      font-family: var(--font-heading);
+      font-size: .98rem;
+      color: var(--cream);
+      white-space: nowrap;
+    }
+    .hour-sep {
+      width: 1px;
+      background: rgba(201,169,110,.3);
+      align-self: stretch;
+    }
+    .reservation-cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .reservation-note {
+      font-size: .78rem;
+      color: rgba(250,247,242,.35);
+      font-style: italic;
+    }
+
+    /* ── nav-link active ──────────────────────────────────────────────── */
+    .nav-link.active { color: var(--gold) !important; }
+
+    /* ── Responsive ───────────────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      .restaurant-grid { grid-template-columns: 1fr; gap: 48px; }
+      .restaurant-img-wrap img { height: 380px; }
+      .private-dining-grid { grid-template-columns: 1fr; gap: 40px; }
+      .private-dining-img img { height: 320px; }
+      .wine-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .menu-courses { grid-template-columns: 1fr; }
+      .menu-course-card.featured { grid-column: span 1; }
+      .menu-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .hours-row { gap: 20px; }
+      .hour-sep { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link active">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link">My Stay</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="dining-hero" id="dining-hero">
+    <img
+      class="dining-hero__bg"
+      src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85&fit=crop"
+      alt="La Vérrière dining room at Château de Huot"
+      loading="eager"
+    >
+    <div class="dining-hero__overlay"></div>
+    <div class="dining-hero__content">
+      <p class="section-label" style="color:var(--gold-light)">La Vérrière</p>
+      <h1>Two Michelin stars.<br>One unforgettable table.</h1>
+      <p class="lead">Chef Émile Renard's celebrated cuisine celebrates the extraordinary ingredients of Provence — from truffle-rich soils to morning-caught sea bream.</p>
+      <button class="btn-primary" data-flow="dining" data-quick="I'd like to reserve a table at La Vérrière">Reserve Your Table</button>
+    </div>
+  </section>
+
+  <!-- RESTAURANT PROFILE -->
+  <section class="restaurant-section">
+    <div class="container">
+      <div class="restaurant-grid">
+
+        <!-- Text -->
+        <div class="restaurant-text reveal">
+          <p class="section-label">The Restaurant</p>
+          <h2>A glass-walled room above the lavender fields</h2>
+          <span class="gold-rule"></span>
+          <p>La Vérrière occupies the original winter garden of the château — a light-filled room of steel and glass cantilevered over the estate's lower terraces, with panoramic views across the Luberon valley and its sea of lavender below.</p>
+          <p>Chef Renard's menus change entirely with the seasons, built around a core philosophy of ingredient-first cooking: what grows nearby, what swims nearby, what the land offers at its most abundant. The kitchen maintains direct relationships with seventeen Provençal producers.</p>
+          <p>Our wine cellar holds 4,200 bottles across 280 references, with a particular depth in the wines of the southern Rhône valley. Sommelier Isabeau Clerc will guide every table through a pairing that illuminates rather than overwhelms.</p>
+
+          <div class="awards-row">
+            <div class="award-pill">
+              <span class="award-pill__icon">★★</span>
+              <div>
+                <p class="award-pill__text">Michelin Guide</p>
+                <p class="award-pill__sub">Two Stars · 2024</p>
+              </div>
+            </div>
+            <div class="award-pill">
+              <span class="award-pill__icon">🌍</span>
+              <div>
+                <p class="award-pill__text">World's 50 Best</p>
+                <p class="award-pill__sub">Consideration List</p>
+              </div>
+            </div>
+            <div class="award-pill">
+              <span class="award-pill__icon">◆</span>
+              <div>
+                <p class="award-pill__text">Gault &amp; Millau</p>
+                <p class="award-pill__sub">17 / 20</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="restaurant-img-col reveal reveal--delay-2">
+          <div class="restaurant-img-wrap">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80&fit=crop" alt="La Vérrière interior dining room">
+            <div class="restaurant-badges">
+              <span class="award-badge">★★ Michelin</span>
+              <span class="award-badge">Gault &amp; Millau 17/20</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CHEF BIO -->
+  <section class="chef-section">
+    <div class="container">
+      <div class="chef-inner reveal">
+        <div class="chef-portrait-wrap">
+          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=600&q=80&fit=crop" alt="Chef Émile Renard">
+        </div>
+        <p class="section-label" style="text-align:center">Executive Chef</p>
+        <h2>Émile Renard</h2>
+        <p class="chef-title">Executive Chef · La Vérrière</p>
+        <div class="chef-bio">
+          <p>Trained under Alain Ducasse at Le Louis XV in Monaco and later at El Bulli during its final extraordinary years, Émile Renard spent two decades absorbing the world's most rigorous culinary traditions before returning to his native Provence. He opened La Vérrière in 2019 with the conviction that the south of France needed no embellishment — only closer attention.</p>
+          <p>His philosophy is ingredient-first, technique-invisible. Where other chefs reach for complexity, Renard reaches for clarity. A single burrata from a farm eight kilometres away, a fig picked at its moment of perfect ripeness — these are the foundations of his cooking. The two Michelin stars arrived not as a surprise, but as a recognition of something that had always been obvious to anyone who ate here.</p>
+        </div>
+        <blockquote class="chef-quote">
+          "The land tells me what to cook. I simply listen."
+          <cite>— Chef Émile Renard</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU PREVIEW -->
+  <section class="menu-section">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:0">
+        <p class="section-label">À La Carte &amp; Tasting</p>
+        <h2>The menu</h2>
+        <span class="gold-rule"></span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="menu-tabs" role="tablist">
+        <button class="menu-tab active" role="tab" aria-selected="true" data-tab="lunch">Déjeuner · Lunch</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-tab="dinner">Dîner · Dinner</button>
+        <button class="menu-tab" role="tab" aria-selected="false" data-tab="wine">Cave · Wines</button>
+      </div>
+
+      <!-- Lunch -->
+      <div class="menu-pane active" id="pane-lunch" role="tabpanel">
+        <div class="menu-header-row">
+          <h3>Lunch Menu</h3>
+          <span class="menu-price-tag">€85 per person · Includes three courses</span>
+        </div>
+        <div class="menu-courses gsap-stagger">
+          <div class="menu-course-card">
+            <p class="course-label">Amuse-bouche</p>
+            <p class="course-name">Trio de la Maison</p>
+            <p class="course-desc">Three preparations from the estate kitchen — a velouté of yesterday's truffle, a tartlet of Luberon sheep's cheese, and a crisp of tapenade with preserved lemon.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Entrée</p>
+            <p class="course-name">Burrata &amp; Luberon Tomatoes</p>
+            <p class="course-desc">Farm burrata from the Vaucluse, heritage tomatoes in six varieties, fresh basil oil, aged Modena balsamic, and fleur de sel from the Camargue.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Plat Principal</p>
+            <p class="course-name">Grilled Sea Bream</p>
+            <p class="course-desc">Whole sea bream from the morning catch, grilled over vine cuttings, served with a fennel confit and a saffron-infused broth from the bones.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Dessert</p>
+            <p class="course-name">Lavender Crème Brûlée</p>
+            <p class="course-desc">Provençal lavender from the estate's lower fields, infused into a cream and set beneath a sugar crust of extraordinary thinness. A dish that has never left the menu.</p>
+          </div>
+        </div>
+        <div class="menu-cta-row">
+          <button class="btn-reserve" data-flow="dining" data-quick="I'd like to reserve for lunch at La Vérrière">Reserve for Lunch</button>
+          <button class="btn-link" data-flow="dining" data-quick="Can you send me the full lunch menu?">View Full Menu ↗</button>
+        </div>
+      </div>
+
+      <!-- Dinner -->
+      <div class="menu-pane" id="pane-dinner" role="tabpanel">
+        <div class="menu-header-row">
+          <h3>Tasting Menu</h3>
+          <span class="menu-price-tag">€165 per person · 7 courses · Wine pairing +€95</span>
+        </div>
+        <div class="menu-courses gsap-stagger">
+          <div class="menu-course-card featured">
+            <p class="course-label" style="color:var(--gold)">Ouverture</p>
+            <p class="course-name">Truffle Amuse-Bouche</p>
+            <p class="course-desc">Black truffle from Périgord, shaved over a warm brioche with unsalted Breton butter and a tiny glass of truffle consommé. A declaration of intent.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Premier</p>
+            <p class="course-name">Foie Gras &amp; Figs</p>
+            <p class="course-desc">Torchon of duck foie gras, Provençal fig compote, brioche toast, Sauternes gel.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Poisson</p>
+            <p class="course-name">Turbot en Croûte d'Herbes</p>
+            <p class="course-desc">Wild Atlantic turbot, herb crust, langoustine bisque, micro herbs from the kitchen garden.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Viande</p>
+            <p class="course-name">Wagyu, Périgueux, Truffe</p>
+            <p class="course-desc">A5 Wagyu from our single Bordelaise supplier, sauce Périgueux, truffle jus, potato gratin dauphinois.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Fromage</p>
+            <p class="course-name">Chariot de Fromages</p>
+            <p class="course-desc">Selection of 12 Provençal and French cheeses, served tableside with accompaniments chosen by our fromagère.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Pré-Dessert</p>
+            <p class="course-name">Sorbet à la Fleur de Thym</p>
+            <p class="course-desc">Wild thyme flower sorbet from the garrigue, olive oil, citrus zest — a palate of complete clarity.</p>
+          </div>
+          <div class="menu-course-card">
+            <p class="course-label">Grand Dessert</p>
+            <p class="course-name">Tarte au Citron Revisitée</p>
+            <p class="course-desc">A reinterpretation of the Provençal lemon tart — yuzu curd, Italian meringue, lemon grass ice cream, edible gold.</p>
+          </div>
+        </div>
+        <div class="menu-cta-row">
+          <button class="btn-reserve" data-flow="dining" data-quick="I'd like to reserve for dinner at La Vérrière — the tasting menu">Reserve for Dinner</button>
+          <button class="btn-link" data-flow="dining" data-quick="Can you send me the full tasting menu?">View Full Menu ↗</button>
+        </div>
+      </div>
+
+      <!-- Wine -->
+      <div class="menu-pane" id="pane-wine" role="tabpanel">
+        <div class="menu-header-row">
+          <h3>Sommelier's Selection</h3>
+          <span class="menu-price-tag">4,200 bottles · 280 references</span>
+        </div>
+        <div class="wine-grid gsap-stagger">
+          <div class="wine-card">
+            <p class="wine-card__region">Châteauneuf-du-Pape · Southern Rhône</p>
+            <p class="wine-card__name">Château Rayas Châteauneuf-du-Pape Blanc</p>
+            <p class="wine-card__vintage">Vintage 2019 · Grenache Blanc</p>
+            <p class="wine-card__price">€340 <span style="font-size:.75rem;color:var(--charcoal);opacity:.5;font-family:var(--font-body)">/ bottle</span></p>
+          </div>
+          <div class="wine-card">
+            <p class="wine-card__region">Bandol · Provence</p>
+            <p class="wine-card__name">Domaine Tempier Bandol Rosé</p>
+            <p class="wine-card__vintage">Vintage 2023 · Mourvèdre, Grenache, Cinsault</p>
+            <p class="wine-card__price">€85 <span style="font-size:.75rem;color:var(--charcoal);opacity:.5;font-family:var(--font-body)">/ bottle</span></p>
+          </div>
+          <div class="wine-card">
+            <p class="wine-card__region">Champagne</p>
+            <p class="wine-card__name">Krug Grande Cuvée 171ème Édition</p>
+            <p class="wine-card__vintage">NV · Pinot Noir, Chardonnay, Meunier</p>
+            <p class="wine-card__price">€220 <span style="font-size:.75rem;color:var(--charcoal);opacity:.5;font-family:var(--font-body)">/ bottle</span></p>
+          </div>
+        </div>
+        <div class="menu-cta-row">
+          <button class="btn-reserve" data-flow="dining" data-quick="I'd like to arrange a wine pairing for my dinner">Arrange Wine Pairing</button>
+          <button class="btn-link" data-flow="dining" data-quick="Can you tell me more about your wine cellar?">Explore the Cellar ↗</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRIVATE DINING -->
+  <section class="private-dining-section">
+    <div class="container">
+      <div class="private-dining-grid">
+
+        <div class="private-dining-img reveal">
+          <img src="https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?w=800&q=80&fit=crop" alt="The Terrace private dining at Château de Huot">
+        </div>
+
+        <div class="private-dining-text reveal reveal--delay-2">
+          <p class="section-label">Private Dining</p>
+          <h2>The Terrace</h2>
+          <span class="gold-rule"></span>
+          <p>Above the lavender fields, open to the Provençal sky — our private terrace accommodates up to twelve guests for an experience that exceeds any restaurant table. Available from May through October, The Terrace is available exclusively for private hire.</p>
+
+          <div class="private-dining-detail">
+            <div class="private-dining-detail__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div>
+              <p class="private-dining-detail__label">Capacity</p>
+              <p class="private-dining-detail__val">Up to 12 guests · Exclusive hire</p>
+            </div>
+          </div>
+          <div class="private-dining-detail">
+            <div class="private-dining-detail__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div>
+              <p class="private-dining-detail__label">Season</p>
+              <p class="private-dining-detail__val">Available May through October</p>
+            </div>
+          </div>
+          <div class="private-dining-detail">
+            <div class="private-dining-detail__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <div>
+              <p class="private-dining-detail__label">Included</p>
+              <p class="private-dining-detail__val">Dedicated butler · Menu consultation with Chef Renard · Sommelier-curated wine flight</p>
+            </div>
+          </div>
+
+          <button class="btn-outline" data-flow="events" data-quick="I'd like to enquire about private dining on The Terrace">Enquire for Private Dining</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVATION CTA -->
+  <section class="reservation-cta">
+    <div class="container">
+      <div class="reservation-cta-inner reveal">
+        <p class="section-label" style="text-align:center;color:var(--gold)">La Vérrière</p>
+        <h2>Your table awaits</h2>
+        <span class="italic-caption">Reservations are recommended a minimum of 48 hours in advance.</span>
+
+        <div class="hours-row">
+          <div class="hour-item">
+            <p class="hour-item__service">Lunch</p>
+            <p class="hour-item__time">12:30 – 14:30</p>
+          </div>
+          <div class="hour-sep"></div>
+          <div class="hour-item">
+            <p class="hour-item__service">Dinner</p>
+            <p class="hour-item__time">19:30 – 22:00</p>
+          </div>
+          <div class="hour-sep"></div>
+          <div class="hour-item">
+            <p class="hour-item__service">Closed</p>
+            <p class="hour-item__time">Tuesday</p>
+          </div>
+        </div>
+
+        <div class="reservation-cta-actions">
+          <button class="btn-primary" data-flow="dining" data-quick="I'd like to reserve a table at La Vérrière">Reserve Your Table</button>
+          <button class="btn-outline-cream" data-flow="dining" data-quick="I have dietary requirements I'd like to discuss for La Vérrière" style="display:inline-flex;align-items:center;padding:14px 32px;border:1px solid rgba(250,247,242,.4);border-radius:2px;font-size:.8125rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);background:none;cursor:pointer;transition:all var(--transition)">Dietary Requirements</button>
+        </div>
+        <p class="reservation-note">We accommodate all dietary requirements with 48 hours' notice. Please inform us of any allergies at the time of booking.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+          <a href="contact.html">Press Enquiries</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy · Terms &amp; Conditions · Cookie Settings</p>
+    </div>
+  </footer>
+
+  <!-- CHAT WIDGET -->
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog" aria-label="Château de Huot Concierge">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="booking" data-quick="I'd like to reserve a suite" class="quick-chip">Reserve a suite</button>
+      <button data-flow="dining" data-quick="Book dinner for two this evening" class="quick-chip">Book dinner</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening. I am Élise, your personal concierge at Château de Huot. How may I make your stay exceptional today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn" aria-label="Send">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Hero load animation
+      var hero = document.getElementById('dining-hero');
+      if (hero) setTimeout(function () { hero.classList.add('loaded'); }, 100);
+
+      // Menu tabs
+      var tabs = document.querySelectorAll('.menu-tab');
+      var panes = document.querySelectorAll('.menu-pane');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+          panes.forEach(function (p) { p.classList.remove('active'); });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+          var pane = document.getElementById('pane-' + tab.dataset.tab);
+          if (pane) pane.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiences — Château de Huot</title>
+  <meta name="description" content="From private yacht charters to dawn truffle hunts — your personal concierge crafts each day around your desires.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ─── Experiences page scoped styles ─── */
+
+    /* Hero */
+    .exp-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 520px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .exp-hero__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 55%;
+    }
+    .exp-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        150deg,
+        rgba(26, 39, 68, 0.78) 0%,
+        rgba(26, 39, 68, 0.32) 60%,
+        rgba(26, 39, 68, 0.65) 100%
+      );
+    }
+    .exp-hero__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px;
+      padding: 0 40px;
+    }
+    .exp-hero__eyebrow {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--gold-light, #E8D5B0);
+      letter-spacing: 0.1em;
+      margin-bottom: 18px;
+    }
+    .exp-hero__h1 {
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 22px;
+      text-shadow: 0 2px 40px rgba(26, 39, 68, 0.45);
+    }
+    .exp-hero__subtitle {
+      color: rgba(250, 247, 242, 0.85);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+    .btn-primary-cream {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 36px;
+      background: var(--gold);
+      color: var(--navy);
+      border: 1px solid var(--gold);
+      border-radius: 2px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+    .btn-primary-cream:hover {
+      background-color: var(--gold-dark);
+      border-color: var(--gold-dark);
+      color: var(--cream);
+      box-shadow: var(--shadow-gold);
+      transform: translateY(-1px);
+    }
+
+    /* Season filter */
+    .exp-filter {
+      padding: 56px 0 0;
+      background: var(--cream);
+    }
+    .exp-filter__inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-bottom: 1px solid var(--stone);
+    }
+    .filter-tab {
+      padding: 14px 28px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.45;
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color var(--transition), opacity var(--transition), border-color var(--transition);
+    }
+    .filter-tab:hover { opacity: 0.75; }
+    .filter-tab.active {
+      color: var(--navy);
+      opacity: 1;
+      border-bottom-color: var(--gold);
+    }
+
+    /* Experience grid section */
+    .exp-grid-section {
+      padding: 64px 0 100px;
+      background: var(--cream);
+    }
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .exp-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .exp-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow);
+      border-color: var(--gold);
+    }
+    .exp-card[data-season].hidden {
+      display: none;
+    }
+    .exp-card__img-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .exp-card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 600ms ease;
+    }
+    .exp-card:hover .exp-card__img-wrap img {
+      transform: scale(1.05);
+    }
+    .exp-card__season-pill {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(26, 39, 68, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(201, 169, 110, 0.4);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .exp-card__body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .exp-card__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+    .exp-card__desc {
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      opacity: 0.72;
+      line-height: 1.65;
+      margin-bottom: 18px;
+      /* clamp to 2 lines */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .exp-card__details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      margin-bottom: 20px;
+      margin-top: auto;
+    }
+    .exp-detail {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.78rem;
+      color: var(--charcoal);
+      opacity: 0.6;
+    }
+    .exp-detail svg { color: var(--gold); opacity: 0.8; flex-shrink: 0; }
+    .exp-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--stone);
+      margin-top: auto;
+    }
+    .exp-card__price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .btn-book-exp {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 20px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+      background: none;
+      white-space: nowrap;
+    }
+    .btn-book-exp:hover {
+      background-color: var(--gold);
+      color: var(--navy);
+      box-shadow: var(--shadow-gold);
+    }
+
+    /* Concierge section */
+    .exp-concierge {
+      background: var(--navy);
+      overflow: hidden;
+    }
+    .exp-concierge__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .exp-concierge__image {
+      position: relative;
+      overflow: hidden;
+    }
+    .exp-concierge__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 700ms ease;
+    }
+    .exp-concierge:hover .exp-concierge__image img {
+      transform: scale(1.04);
+    }
+    .exp-concierge__image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--navy) 100%);
+    }
+    .exp-concierge__text {
+      display: flex;
+      align-items: center;
+      padding: 80px 72px 80px 64px;
+    }
+    .exp-concierge__text-inner {
+      max-width: 440px;
+    }
+    .exp-concierge__text-inner .section-label {
+      display: block;
+      margin-bottom: 16px;
+    }
+    .exp-concierge__h2 {
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .exp-concierge__p {
+      color: rgba(250, 247, 242, 0.7);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .exp-concierge__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(250, 247, 242, 0.55);
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .exp-concierge__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn-concierge {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      border: 1px solid rgba(201, 169, 110, 0.45);
+      color: rgba(201, 169, 110, 0.85);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      cursor: pointer;
+      background: none;
+      transition: background-color var(--transition), border-color var(--transition), color var(--transition);
+    }
+    .btn-concierge:hover {
+      background-color: rgba(201, 169, 110, 0.12);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Virtual tour teaser */
+    .exp-virtual {
+      padding: 100px 0;
+      background: var(--stone-light);
+      text-align: center;
+    }
+    .exp-virtual__h2 {
+      margin-bottom: 16px;
+    }
+    .exp-virtual__p {
+      opacity: 0.65;
+      max-width: 480px;
+      margin: 0 auto 36px;
+    }
+
+    /* Testimonial CTA */
+    .exp-testimonial-cta {
+      padding: 100px 0;
+      background: var(--cream);
+    }
+    .exp-testimonial-cta__inner {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .exp-testimonial-cta__stars {
+      color: var(--gold);
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      margin-bottom: 24px;
+    }
+    .exp-testimonial-cta__quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      color: var(--navy);
+      line-height: 1.55;
+      margin-bottom: 28px;
+      font-weight: 400;
+    }
+    .exp-testimonial-cta__attr {
+      font-size: 0.875rem;
+      color: var(--charcoal);
+      opacity: 0.55;
+      letter-spacing: 0.05em;
+      margin-bottom: 48px;
+    }
+    .exp-testimonial-cta__divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 48px;
+    }
+    .exp-testimonial-cta__cta-h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .exp-testimonial-cta__cta-p {
+      font-size: 0.95rem;
+      opacity: 0.65;
+      margin-bottom: 32px;
+    }
+
+    /* Active nav link */
+    .nav-link[href="experiences.html"] { color: var(--gold) !important; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .exp-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .exp-concierge__inner { grid-template-columns: 1fr; }
+      .exp-concierge__image { height: 320px; }
+      .exp-concierge__image-overlay { background: linear-gradient(to bottom, transparent 50%, var(--navy) 100%); }
+      .exp-concierge__text { padding: 48px 40px 56px; }
+      .exp-concierge__text-inner { max-width: 100%; }
+    }
+    @media (max-width: 768px) {
+      .exp-grid { grid-template-columns: 1fr; }
+      .exp-filter__inner { overflow-x: auto; }
+      .filter-tab { padding: 12px 20px; white-space: nowrap; }
+      .exp-concierge__text { padding: 40px 24px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link">My Stay</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- 1. PAGE HERO -->
+  <section class="exp-hero">
+    <img
+      class="exp-hero__bg"
+      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=85&fit=crop"
+      alt="Provence landscape at golden hour"
+    >
+    <div class="exp-hero__overlay"></div>
+    <div class="exp-hero__content">
+      <span class="exp-hero__eyebrow">Curated Experiences</span>
+      <h1 class="exp-hero__h1">The art of living<br>extraordinarily</h1>
+      <p class="exp-hero__subtitle">From private yacht charters to dawn truffle hunts — your personal concierge crafts each day around your desires.</p>
+      <button
+        class="btn-primary-cream"
+        data-flow="concierge"
+        data-quick="What should I do today? Help me plan the perfect day"
+      >Plan My Day</button>
+    </div>
+  </section>
+
+  <!-- 2. SEASON FILTER -->
+  <div class="exp-filter">
+    <div class="container">
+      <div class="exp-filter__inner">
+        <button class="filter-tab active" data-filter="all">All Seasons</button>
+        <button class="filter-tab" data-filter="spring">Spring</button>
+        <button class="filter-tab" data-filter="summer">Summer</button>
+        <button class="filter-tab" data-filter="autumn">Autumn</button>
+        <button class="filter-tab" data-filter="winter">Winter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. EXPERIENCE CARDS GRID -->
+  <section class="exp-grid-section">
+    <div class="container">
+      <div class="exp-grid gsap-stagger" id="exp-grid">
+
+        <!-- Lavender Valley Tour [Summer] -->
+        <div class="exp-card reveal" data-season="summer">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&q=80&fit=crop"
+              alt="Lavender Valley Tour — Provence lavender fields"
+            >
+            <span class="exp-card__season-pill">Summer</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Lavender Valley Tour</h3>
+            <p class="exp-card__desc">A private guided walk through 40,000 lavender plants at peak bloom, followed by a hands-on perfume workshop at a local distillery and a picnic among the rows.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                3 hours
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 6 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€180 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/person</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Lavender Valley Tour">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sunset Yacht Charter [Summer] -->
+        <div class="exp-card reveal reveal--delay-1" data-season="summer">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1540946485063-a40da27545f8?w=800&q=80&fit=crop"
+              alt="Sunset Yacht Charter on the Côte d'Azur"
+            >
+            <span class="exp-card__season-pill">Summer</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Sunset Yacht Charter</h3>
+            <p class="exp-card__desc">A private charter along the Côte d'Azur with a sommelier aboard selecting from the estate's cellar. Aperitifs at anchor as the sun slides into the sea.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                3 hours
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 8 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€980 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/charter</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Sunset Yacht Charter">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Provençal Cooking Masterclass [All year] -->
+        <div class="exp-card reveal reveal--delay-2" data-season="all">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80&fit=crop"
+              alt="Provençal Cooking Masterclass with Chef Renard"
+            >
+            <span class="exp-card__season-pill">All Year</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Provençal Cooking Masterclass</h3>
+            <p class="exp-card__desc">Join Chef Renard at the morning market, then move to our private kitchen to turn the day's finest ingredients into a complete Provençal meal you will eat together.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                4 hours
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 6 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€240 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/person</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Provençal Cooking Masterclass">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vineyard & Wine Tasting [Autumn] -->
+        <div class="exp-card reveal" data-season="autumn">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80&fit=crop"
+              alt="Private vineyard wine tasting in the Rhône Valley"
+            >
+            <span class="exp-card__season-pill">Autumn</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Vineyard &amp; Wine Tasting</h3>
+            <p class="exp-card__desc">A private tour of three Côtes du Rhône vineyards with cellar visits and conversations with the winemakers, culminating in a harvest lunch with our sommelier.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Full day
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 10 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€320 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/person</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Vineyard and Wine Tasting experience">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Truffle Hunt at Dawn [Winter/Autumn] -->
+        <div class="exp-card reveal reveal--delay-1" data-season="winter autumn">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1526399232581-e8e8ba6a0a43?w=800&q=80&fit=crop"
+              alt="Truffle Hunt at Dawn in the Provence countryside"
+            >
+            <span class="exp-card__season-pill">Autumn · Winter</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Truffle Hunt at Dawn</h3>
+            <p class="exp-card__desc">A professional hunter and his dogs lead you through the oak forests at first light. Return to a lavish brunch built entirely around the morning's fresh truffles.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                4 hours
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 4 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€380 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/person</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Truffle Hunt at Dawn">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cycling the Villages [Spring/Autumn] -->
+        <div class="exp-card reveal reveal--delay-2" data-season="spring autumn">
+          <div class="exp-card__img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80&fit=crop"
+              alt="Cycling through Luberon villages in Provence"
+            >
+            <span class="exp-card__season-pill">Spring · Autumn</span>
+          </div>
+          <div class="exp-card__body">
+            <h3 class="exp-card__name">Cycling the Villages</h3>
+            <p class="exp-card__desc">Electric bikes through the Luberon's ochre villages — Gordes, Roussillon, Bonnieux — with a picnic in the lavender fields and a guide who knows every secret viewpoint.</p>
+            <div class="exp-card__details">
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                5 hours
+              </span>
+              <span class="exp-detail">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+                Up to 8 guests
+              </span>
+            </div>
+            <div class="exp-card__footer">
+              <span class="exp-card__price">€120 <span style="font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:400;color:var(--charcoal);opacity:0.5">/person</span></span>
+              <button class="btn-book-exp" data-flow="concierge" data-quick="I'd like to book the Cycling the Villages experience">Book Experience</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CONCIERGE SECTION -->
+  <section class="exp-concierge">
+    <div class="exp-concierge__inner">
+      <div class="exp-concierge__image">
+        <img
+          src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80&fit=crop"
+          alt="Cycling through Provence — guided by your personal concierge"
+        >
+        <div class="exp-concierge__image-overlay"></div>
+      </div>
+      <div class="exp-concierge__text">
+        <div class="exp-concierge__text-inner reveal">
+          <span class="section-label">The Concierge</span>
+          <h2 class="exp-concierge__h2">Your personal concierge</h2>
+          <p class="exp-concierge__p">Every guest at Château de Huot is assigned a dedicated personal concierge before they arrive. Not a booking desk. Not a list of recommendations. A person who listens.</p>
+          <p class="exp-concierge__quote">"Tell us how you like to spend a perfect day and we will build it for you, from wake-up to nightcap."</p>
+          <div class="exp-concierge__actions">
+            <button class="btn-concierge" data-flow="concierge" data-quick="Help me plan the perfect day in Provence">Plan my perfect day</button>
+            <button class="btn-concierge" data-flow="concierge" data-quick="What outdoor experiences do you recommend?">Outdoor experiences</button>
+            <button class="btn-concierge" data-flow="concierge" data-quick="What culinary experiences can you arrange?">Culinary adventures</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. VIRTUAL TOUR TEASER -->
+  <section class="exp-virtual">
+    <div class="container">
+      <div class="reveal" style="max-width:600px;margin:0 auto">
+        <span class="section-label" style="display:block;text-align:center">Planning Your Visit</span>
+        <h2 class="exp-virtual__h2">Can't decide? Talk to us.</h2>
+        <div class="gold-line"></div>
+        <p class="exp-virtual__p">Book a 15-minute call with our concierge to plan the perfect itinerary. We'll learn what excites you, what your pace is, and what a great day looks like — then we'll build it.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <button
+            class="btn-primary-cream"
+            data-flow="concierge"
+            data-quick="I'd like to schedule a call to plan my Provence itinerary"
+          >Schedule a Call</button>
+          <button
+            class="btn-outline"
+            data-flow="concierge"
+            data-quick="Can you send me more information about available experiences?"
+            style="padding:15px 36px"
+          >Send Me Details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. TESTIMONIAL CTA -->
+  <section class="exp-testimonial-cta">
+    <div class="container">
+      <div class="exp-testimonial-cta__inner reveal">
+        <div class="exp-testimonial-cta__stars">★★★★★</div>
+        <blockquote class="exp-testimonial-cta__quote">
+          "The truffle hunt at dawn changed how I think about mornings. And the brunch after? I still dream about it."
+        </blockquote>
+        <p class="exp-testimonial-cta__attr">— Robert A., New York &nbsp;·&nbsp; Truffle Hunt at Dawn &nbsp;·&nbsp; November 2025</p>
+        <div class="exp-testimonial-cta__divider"></div>
+        <h3 class="exp-testimonial-cta__cta-h3">Ready to make your own memories?</h3>
+        <p class="exp-testimonial-cta__cta-p">Your concierge is waiting. Every experience above can be tailored, extended, or combined. There are no off-the-shelf days at Château de Huot.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+          <button
+            class="btn-primary-cream"
+            data-flow="concierge"
+            data-quick="I'm ready to plan my experiences at Château de Huot"
+          >Start Planning</button>
+          <button
+            class="nav-cta"
+            data-flow="booking"
+            data-quick="I'd like to reserve a suite"
+            style="padding:15px 36px;font-size:0.8125rem;letter-spacing:0.15em"
+          >Reserve a Suite</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge" style="margin-top:20px">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+          <a href="contact.html">Press Enquiries</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy · Terms &amp; Conditions · Cookie Settings</p>
+    </div>
+  </footer>
+
+  <!-- CHAT WIDGET -->
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="booking" data-quick="I'd like to reserve a suite" class="quick-chip">Reserve a suite</button>
+      <button data-flow="dining" data-quick="Book dinner for two" class="quick-chip">Book dinner</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening. I am Élise, your personal concierge at Château de Huot. How may I make your stay exceptional today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+  <script>
+    // Season filter
+    (function () {
+      var tabs = document.querySelectorAll('.filter-tab');
+      var cards = document.querySelectorAll('.exp-card[data-season]');
+
+      tabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          tabs.forEach(function(t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+
+          var filter = tab.dataset.filter;
+
+          cards.forEach(function(card) {
+            if (filter === 'all') {
+              card.style.display = '';
+            } else {
+              var seasons = card.dataset.season || '';
+              if (seasons.indexOf(filter) !== -1) {
+                card.style.display = '';
+              } else {
+                card.style.display = 'none';
+              }
+            }
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

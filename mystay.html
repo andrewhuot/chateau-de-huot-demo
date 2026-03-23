@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Stay — Château de Huot</title>
+  <meta name="description" content="Your personal guest dashboard at Château de Huot. View your reservation, activities, service requests, and loyalty rewards.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── My Stay Dashboard Styles ──────────────────────────────────────── */
+    .mystay-hero {
+      position: relative;
+      padding: 160px 0 80px;
+      background: var(--navy);
+      text-align: center;
+    }
+    .mystay-hero h1 {
+      color: var(--cream);
+      font-weight: 400;
+      margin: 8px 0 12px;
+    }
+    .mystay-hero .lead {
+      color: rgba(250,247,242,.7);
+      font-size: 1.05rem;
+    }
+    .mystay-welcome {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .dashboard {
+      padding: var(--space-2xl) 0 var(--space-3xl);
+      background: var(--cream);
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .dash-card {
+      background: #fff;
+      border: 1px solid var(--stone, #E8DDD0);
+      border-radius: var(--radius, 12px);
+      padding: 28px 24px;
+      transition: border-color 240ms ease, box-shadow 240ms ease;
+    }
+    .dash-card:hover {
+      border-color: rgba(201,169,110,0.4);
+      box-shadow: 0 12px 40px rgba(26,39,68,0.08);
+    }
+    .dash-card--full {
+      grid-column: 1 / -1;
+    }
+    .dash-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .dash-card__title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin: 0;
+    }
+    .dash-card__badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .badge-confirmed {
+      background: rgba(123,158,135,0.12);
+      color: var(--sage, #7B9E87);
+    }
+    .badge-gold {
+      background: rgba(201,169,110,0.12);
+      color: var(--gold);
+    }
+    .badge-pending {
+      background: rgba(66,133,244,0.1);
+      color: #4285F4;
+    }
+
+    /* Reservation Card */
+    .reservation-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .res-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .res-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+    .res-value {
+      font-size: 0.95rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+    .res-room-img {
+      grid-column: 1 / -1;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 160px;
+      margin-bottom: 8px;
+    }
+    .res-room-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Activity Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 24px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      bottom: 4px;
+      width: 1px;
+      background: var(--stone, #E8DDD0);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 20px;
+    }
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -20px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px rgba(201,169,110,0.2);
+    }
+    .timeline-dot--done {
+      background: var(--sage, #7B9E87);
+      box-shadow: 0 0 0 2px rgba(123,158,135,0.2);
+    }
+    .timeline-dot--upcoming {
+      background: #fff;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 0 2px rgba(201,169,110,0.15);
+    }
+    .timeline-time {
+      font-size: 0.7rem;
+      color: var(--charcoal);
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .timeline-event {
+      font-size: 0.9rem;
+      color: var(--navy);
+      font-weight: 500;
+      margin: 2px 0;
+    }
+    .timeline-detail {
+      font-size: 0.8rem;
+      color: var(--charcoal);
+      opacity: 0.6;
+    }
+
+    /* Service Requests */
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--stone, #E8DDD0);
+      border-radius: 8px;
+    }
+    .service-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      background: rgba(201,169,110,0.08);
+    }
+    .service-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .service-name {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .service-eta {
+      font-size: 0.72rem;
+      color: var(--charcoal);
+      opacity: 0.55;
+    }
+
+    /* Quick Actions */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .quick-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 20px 12px;
+      border: 1px solid var(--stone, #E8DDD0);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      transition: border-color 200ms ease, background 200ms ease, transform 180ms ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .quick-action-btn:hover {
+      border-color: var(--gold);
+      background: rgba(201,169,110,0.04);
+      transform: translateY(-2px);
+    }
+    .quick-action-icon {
+      font-size: 1.4rem;
+    }
+    .quick-action-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--navy);
+      text-align: center;
+    }
+
+    /* Loyalty Points */
+    .loyalty-summary {
+      text-align: center;
+    }
+    .loyalty-points-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: var(--gold);
+      line-height: 1;
+      margin: 8px 0;
+    }
+    .loyalty-tier {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--charcoal);
+      opacity: 0.6;
+      margin-bottom: 16px;
+    }
+    .loyalty-bar {
+      height: 6px;
+      background: var(--stone, #E8DDD0);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 12px 0 8px;
+    }
+    .loyalty-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light, #E8D5B0) 100%);
+      border-radius: 3px;
+      width: 68%;
+      transition: width 1s ease;
+    }
+    .loyalty-next {
+      font-size: 0.72rem;
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+    .loyalty-perks {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .loyalty-perk {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: rgba(201,169,110,0.08);
+      color: var(--gold-dark, #9E7A4A);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .reservation-detail {
+        grid-template-columns: 1fr;
+      }
+      .quick-actions-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link active">My Stay</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="mystay-hero">
+    <div class="container">
+      <p class="mystay-welcome">Welcome back, Mr. DuPont</p>
+      <h1>Your Stay Dashboard</h1>
+      <p class="lead">Everything you need for a perfect stay — at a glance.</p>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="dashboard">
+    <div class="container">
+      <div class="dashboard-grid">
+
+        <!-- Reservation Card -->
+        <div class="dash-card dash-card--full">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Current Reservation</h2>
+            <span class="dash-card__badge badge-confirmed">Confirmed</span>
+          </div>
+          <div class="res-room-img">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80&fit=crop" alt="Riviera Suite">
+          </div>
+          <div class="reservation-detail">
+            <div class="res-field">
+              <span class="res-label">Room</span>
+              <span class="res-value">Riviera Suite — Room 412</span>
+            </div>
+            <div class="res-field">
+              <span class="res-label">Confirmation</span>
+              <span class="res-value">#CH-2026-04187</span>
+            </div>
+            <div class="res-field">
+              <span class="res-label">Check-in</span>
+              <span class="res-value">Friday, 27 March 2026 · 3:00 PM</span>
+            </div>
+            <div class="res-field">
+              <span class="res-label">Check-out</span>
+              <span class="res-value">Sunday, 29 March 2026 · 11:00 AM</span>
+            </div>
+            <div class="res-field">
+              <span class="res-label">Guests</span>
+              <span class="res-value">2 Adults</span>
+            </div>
+            <div class="res-field">
+              <span class="res-label">Total</span>
+              <span class="res-value" style="color:var(--gold);font-family:'Playfair Display',serif;font-size:1.1rem">€3,020</span>
+            </div>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px">
+            <button class="btn-outline" data-flow="modify" data-quick="I need to modify my reservation" style="font-size:0.8rem;padding:10px 20px">Modify Reservation</button>
+            <button class="btn-text-gold" data-flow="concierge" data-quick="What should I do during my stay?">Ask Concierge</button>
+          </div>
+        </div>
+
+        <!-- Activity Timeline -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Today's Activities</h2>
+          </div>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-dot timeline-dot--done"></div>
+              <div class="timeline-time">8:00 AM</div>
+              <div class="timeline-event">Breakfast at La Vérrière</div>
+              <div class="timeline-detail">Table 7 · Terrace seating confirmed</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot timeline-dot--done"></div>
+              <div class="timeline-time">10:00 AM</div>
+              <div class="timeline-event">Signature Massage</div>
+              <div class="timeline-detail">Château Spa · 90 min · Therapist: Marie</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-time">1:00 PM</div>
+              <div class="timeline-event">Lavender Valley Tour</div>
+              <div class="timeline-detail">Private guide · 3 hours · Pickup at lobby</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot timeline-dot--upcoming"></div>
+              <div class="timeline-time">7:30 PM</div>
+              <div class="timeline-event">Dinner at La Vérrière</div>
+              <div class="timeline-detail">Tasting menu · Wine pairing · Table 12</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot timeline-dot--upcoming"></div>
+              <div class="timeline-time">9:30 PM</div>
+              <div class="timeline-event">Turndown Service</div>
+              <div class="timeline-detail">Lavender pillow mist · Firm pillows · 20°C</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Service Requests -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Service Requests</h2>
+          </div>
+          <div class="service-list">
+            <div class="service-item">
+              <div class="service-icon">🧖</div>
+              <div class="service-info">
+                <div class="service-name">Extra towels delivered</div>
+                <div class="service-eta">Completed · 9:15 AM</div>
+              </div>
+              <span class="dash-card__badge badge-confirmed">Done</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">🍽️</div>
+              <div class="service-info">
+                <div class="service-name">Room service — Afternoon tea</div>
+                <div class="service-eta">Arriving in ~15 min</div>
+              </div>
+              <span class="dash-card__badge badge-pending">In Progress</span>
+            </div>
+            <div class="service-item">
+              <div class="service-icon">👔</div>
+              <div class="service-info">
+                <div class="service-name">Dry cleaning pickup</div>
+                <div class="service-eta">Scheduled · 5:00 PM</div>
+              </div>
+              <span class="dash-card__badge badge-gold">Scheduled</span>
+            </div>
+          </div>
+          <button class="btn-gold" data-flow="service" data-quick="I'd like to order room service" style="margin-top:16px;width:100%;font-size:0.8rem;padding:10px">New Service Request</button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Quick Actions</h2>
+          </div>
+          <div class="quick-actions-grid">
+            <button class="quick-action-btn" data-flow="service" data-quick="I'd like to order room service">
+              <span class="quick-action-icon">🍽️</span>
+              <span class="quick-action-label">Room Service</span>
+            </button>
+            <button class="quick-action-btn" data-flow="spa" data-quick="I'd like a spa treatment">
+              <span class="quick-action-icon">🧖</span>
+              <span class="quick-action-label">Book Spa</span>
+            </button>
+            <button class="quick-action-btn" data-flow="dining" data-quick="Book dinner for two this evening">
+              <span class="quick-action-icon">🥂</span>
+              <span class="quick-action-label">Reserve Dinner</span>
+            </button>
+            <button class="quick-action-btn" data-flow="explore" data-quick="What's nearby to explore?">
+              <span class="quick-action-icon">🗺️</span>
+              <span class="quick-action-label">Explore Nearby</span>
+            </button>
+            <button class="quick-action-btn" data-flow="concierge" data-quick="What should I do today?">
+              <span class="quick-action-icon">🔔</span>
+              <span class="quick-action-label">Call Concierge</span>
+            </button>
+            <button class="quick-action-btn" data-flow="support" data-quick="I have a question">
+              <span class="quick-action-icon">💬</span>
+              <span class="quick-action-label">Guest Support</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Loyalty Points -->
+        <div class="dash-card">
+          <div class="dash-card__header">
+            <h2 class="dash-card__title">Loyalty Rewards</h2>
+            <span class="dash-card__badge badge-gold">Gold Member</span>
+          </div>
+          <div class="loyalty-summary">
+            <div class="loyalty-points-big">2,840</div>
+            <div class="loyalty-tier">Points Earned</div>
+            <div class="loyalty-bar">
+              <div class="loyalty-bar-fill"></div>
+            </div>
+            <div class="loyalty-next">1,160 points to Platinum tier</div>
+            <div class="loyalty-perks">
+              <span class="loyalty-perk">Late checkout</span>
+              <span class="loyalty-perk">Room upgrade</span>
+              <span class="loyalty-perk">Spa credit</span>
+              <span class="loyalty-perk">Welcome champagne</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+          <a href="contact.html">Press Enquiries</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy &middot; Terms &amp; Conditions &middot; Cookie Settings</p>
+    </div>
+  </footer>
+
+  <!-- CHAT WIDGET -->
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog" aria-label="Château de Huot Concierge">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="modify" data-quick="I need to modify my reservation" class="quick-chip">Modify booking</button>
+      <button data-flow="service" data-quick="I'd like to order room service" class="quick-chip">Room service</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening, Mr. DuPont. I am Élise, your personal concierge. How may I enhance your stay today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn" aria-label="Send">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+</body>
+</html>

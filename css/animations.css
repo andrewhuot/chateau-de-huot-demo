@@ -1,0 +1,832 @@
+/* ==========================================================================
+   Château de Huot — animations.css
+   Keyframes, GSAP helper classes, parallax, hover utilities
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO AVAILABILITY CARD ENTRANCE
+   -------------------------------------------------------------------------- */
+
+.hero-availability-card {
+  animation: heroCardReveal 900ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
+}
+
+@keyframes heroCardReveal {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SECTION HEADING GOLD LINE DRAW — fires when section-header enters viewport
+   -------------------------------------------------------------------------- */
+
+.section-header .gold-line {
+  transform-origin: left center;
+  animation: drawGoldLine 700ms cubic-bezier(0.22, 1, 0.36, 1) 200ms both;
+}
+
+@keyframes drawGoldLine {
+  from { transform: scaleX(0); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   STAT NUMBER COUNT-UP VISUAL EFFECT (CSS only — creates a brief pop-in)
+   -------------------------------------------------------------------------- */
+
+.stat-number {
+  animation: statPop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-play-state: paused;
+}
+
+.stat-item.is-visible .stat-number {
+  animation-play-state: running;
+}
+
+@keyframes statPop {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   TESTIMONIAL CARDS — staggered reveal with slight horizontal offset
+   -------------------------------------------------------------------------- */
+
+.gsap-testimonials > * {
+  opacity: 0;
+  transform: translateY(32px);
+  will-change: opacity, transform;
+}
+
+.gsap-testimonials > *.gsap-is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   FEATURE CARDS — hover glow instead of just lift
+   -------------------------------------------------------------------------- */
+
+.feature-card {
+  transition: transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease !important;
+}
+
+.feature-card:hover {
+  border-color: rgba(201, 169, 110, 0.4) !important;
+  box-shadow: 0 20px 60px rgba(26, 39, 68, 0.1), 0 0 0 1px rgba(201, 169, 110, 0.15) !important;
+}
+
+/* --------------------------------------------------------------------------
+   ROOM CARDS — enhanced hover state
+   -------------------------------------------------------------------------- */
+
+.room-card:hover {
+  border-color: rgba(201, 169, 110, 0.5) !important;
+}
+
+/* --------------------------------------------------------------------------
+   ALT ROW IMAGE — extend parallax travel for more depth
+   -------------------------------------------------------------------------- */
+
+.alt-row-img img {
+  transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.alt-row:hover .alt-row-img img {
+  transform: scale(1.05) !important;
+}
+
+/* --------------------------------------------------------------------------
+   WELCOME STRIP — subtle fade-up on scroll
+   -------------------------------------------------------------------------- */
+
+.welcome-quote {
+  animation: fadeUp 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* --------------------------------------------------------------------------
+   STATS BAR — items stagger in
+   -------------------------------------------------------------------------- */
+
+.stat-item {
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   BUTTON MICRO-INTERACTIONS — all primary CTAs
+   -------------------------------------------------------------------------- */
+
+.btn-primary,
+.btn-gold,
+.btn-outline,
+.btn-outline-light {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 400ms ease;
+}
+
+.btn-primary:hover::after,
+.btn-gold:hover::after {
+  transform: translateX(100%);
+}
+
+/* Inline button text link */
+.btn-text {
+  color: var(--navy, #1A2744);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-text::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--navy, #1A2744);
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: transform 280ms ease;
+}
+
+.btn-text:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-text-gold {
+  color: var(--gold, #C9A96E);
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  letter-spacing: 0.06em;
+  position: relative;
+}
+
+.btn-text-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--gold, #C9A96E);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 280ms ease;
+}
+
+.btn-text-gold:hover::after {
+  transform: scaleX(1);
+}
+
+/* --------------------------------------------------------------------------
+   KEYFRAMES
+   -------------------------------------------------------------------------- */
+
+/* Fade up from below — primary entrance animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Simple fade in */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    transform: translateX(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Slide in from below (smaller travel) */
+@keyframes slideUp {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Scale in from center */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Gold pulse — used on launcher button ring */
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(201, 169, 110, 0);
+  }
+}
+
+/* Typing bounce — three-dot loader in chat */
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  40% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* Parallax float — gentle up/down oscillation for hero elements */
+@keyframes parallaxFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+/* Shimmer — loading placeholder skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+/* Rotate — used on spinners and loading indicators */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse glow — soft radial pulse for highlighted elements */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(201, 169, 110, 0);
+  }
+}
+
+/* Fade in + scale — panel open springy entrance */
+@keyframes panelOpen {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Draw underline — for gold accent lines under headings */
+@keyframes drawLine {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Confetti fall — triggered on payment confirmation */
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Staggered wave — for sequential list reveals */
+@keyframes waveIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  60% {
+    transform: translateY(-3px) scale(1.005);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CSS ANIMATION UTILITY CLASSES
+   -------------------------------------------------------------------------- */
+
+/* Base animated class — add via JS when element enters viewport */
+.animate-fade-up {
+  animation: fadeUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 600ms ease both;
+}
+
+.animate-slide-right {
+  animation: slideInRight 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-slide-left {
+  animation: slideInLeft 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-slide-up {
+  animation: slideUp 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-panel-open {
+  animation: panelOpen 400ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Animation delay utilities */
+.delay-0   { animation-delay: 0ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* Animation duration utilities */
+.duration-fast   { animation-duration: 300ms; }
+.duration-normal { animation-duration: 600ms; }
+.duration-slow   { animation-duration: 900ms; }
+.duration-slower { animation-duration: 1200ms; }
+
+/* Infinite animation helpers */
+.float {
+  animation: parallaxFloat 8s ease-in-out infinite;
+}
+
+.float--slow {
+  animation: parallaxFloat 12s ease-in-out infinite;
+}
+
+.float--fast {
+  animation: parallaxFloat 5s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+.spin {
+  animation: spin 1.2s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   GSAP HELPER CLASSES
+   -------------------------------------------------------------------------- */
+
+/* Elements that GSAP ScrollTrigger will animate in.
+   Initial hidden state — GSAP overrides on scroll. */
+.gsap-reveal {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+/* After GSAP marks element visible */
+.gsap-reveal.gsap-is-visible {
+  opacity: 1;
+}
+
+/* Children of this container receive staggered animation from GSAP.
+   Parent is visible, children hidden until GSAP fires. */
+.gsap-stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+/* GSAP stagger: each child gets is-visible class with stagger delay */
+.gsap-stagger > *.gsap-is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Horizontal stagger (for row-based cards) */
+.gsap-stagger-x > * {
+  opacity: 0;
+  transform: translateX(30px);
+  will-change: opacity, transform;
+}
+
+.gsap-stagger-x > *.gsap-is-visible {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Clip reveal — text lines clip from bottom (use with SplitText) */
+.gsap-clip-line {
+  overflow: hidden;
+  display: block;
+}
+
+/* Pinned section support class — GSAP ScrollTrigger pin */
+.gsap-pinned {
+  position: sticky;
+  top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   PARALLAX HELPERS
+   -------------------------------------------------------------------------- */
+
+/* Container that hides overflow as image translates on scroll */
+.parallax-img {
+  overflow: hidden;
+  position: relative;
+}
+
+/* The img inside — GSAP ScrollTrigger sets translateY via inline style */
+.parallax-img > img,
+.parallax-img > .parallax-img__inner {
+  width: 100%;
+  height: 120%; /* Oversized to allow vertical travel */
+  object-fit: cover;
+  will-change: transform;
+  transform: translateY(0);
+  display: block;
+}
+
+/* Subtle slow-float version without JS (pure CSS) */
+.parallax-css {
+  animation: parallaxFloat 10s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   HOVER LIFT
+   -------------------------------------------------------------------------- */
+
+/* Cards and elements that rise on hover */
+.hover-lift {
+  transition: transform 240ms ease, box-shadow 240ms ease;
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(26, 39, 68, 0.18);
+}
+
+/* Stronger lift for hero cards */
+.hover-lift--lg {
+  transition: transform 240ms ease, box-shadow 240ms ease;
+  will-change: transform;
+}
+
+.hover-lift--lg:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 36px 80px rgba(26, 39, 68, 0.22);
+}
+
+/* Subtle lift */
+.hover-lift--sm {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.hover-lift--sm:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(26, 39, 68, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   HOVER ZOOM (image inside container)
+   -------------------------------------------------------------------------- */
+
+/* Parent container — overflow must be hidden */
+.hover-zoom {
+  overflow: hidden;
+}
+
+.hover-zoom img,
+.hover-zoom .hover-zoom__img {
+  transition: transform 600ms ease;
+  will-change: transform;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hover-zoom:hover img,
+.hover-zoom:hover .hover-zoom__img {
+  transform: scale(1.06);
+}
+
+/* Faster zoom variant */
+.hover-zoom--fast img,
+.hover-zoom--fast .hover-zoom__img {
+  transition: transform 350ms ease;
+}
+
+.hover-zoom--fast:hover img,
+.hover-zoom--fast:hover .hover-zoom__img {
+  transform: scale(1.05);
+}
+
+/* Slower, more dramatic zoom */
+.hover-zoom--slow img,
+.hover-zoom--slow .hover-zoom__img {
+  transition: transform 900ms ease;
+}
+
+.hover-zoom--slow:hover img,
+.hover-zoom--slow .hover-zoom__img {
+  transform: scale(1.08);
+}
+
+/* --------------------------------------------------------------------------
+   SHIMMER SKELETON LOADING
+   -------------------------------------------------------------------------- */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--stone-light, #F3EDE5) 0px,
+    rgba(255, 255, 255, 0.8) 80px,
+    var(--stone-light, #F3EDE5) 160px
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+.skeleton--text {
+  height: 14px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.skeleton--text-sm {
+  height: 10px;
+  width: 60%;
+  border-radius: 4px;
+}
+
+.skeleton--title {
+  height: 24px;
+  width: 75%;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+.skeleton--image {
+  height: 200px;
+  border-radius: var(--radius, 12px);
+}
+
+.skeleton--circle {
+  border-radius: 50%;
+}
+
+/* --------------------------------------------------------------------------
+   GOLD UNDERLINE DRAW
+   -------------------------------------------------------------------------- */
+
+/* Animated underline that draws from left on hover */
+.underline-gold {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-gold::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--gold, #C9A96E);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.underline-gold:hover::after {
+  transform: scaleX(1);
+}
+
+/* Static gold underline (already drawn, animates width) */
+.heading-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.heading-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold, #C9A96E), rgba(201, 169, 110, 0));
+  animation: drawLine 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 300ms;
+}
+
+/* --------------------------------------------------------------------------
+   TRANSITIONS — SHARED UTILITY CLASSES
+   -------------------------------------------------------------------------- */
+
+.transition-all {
+  transition: all 240ms ease;
+}
+
+.transition-colors {
+  transition: color 240ms ease, background-color 240ms ease, border-color 240ms ease;
+}
+
+.transition-transform {
+  transition: transform 240ms ease;
+}
+
+.transition-opacity {
+  transition: opacity 240ms ease;
+}
+
+.transition-shadow {
+  transition: box-shadow 240ms ease;
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION — Honor user preference
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all CSS animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+  }
+
+  /* Keep opacity for visibility but skip motion */
+  .gsap-reveal,
+  .gsap-stagger > *,
+  .gsap-stagger-x > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Disable parallax transforms */
+  .parallax-img > img,
+  .parallax-img > .parallax-img__inner {
+    transform: none !important;
+    height: 100%;
+  }
+
+  /* Disable hover zoom motion (keep interactivity signal) */
+  .hover-zoom img,
+  .hover-zoom .hover-zoom__img,
+  .hover-zoom--fast img,
+  .hover-zoom--slow img {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* Disable hover lift motion */
+  .hover-lift:hover,
+  .hover-lift--lg:hover,
+  .hover-lift--sm:hover {
+    transform: none !important;
+  }
+
+  /* Remove float animation */
+  .float,
+  .float--slow,
+  .float--fast,
+  .parallax-css {
+    animation: none !important;
+  }
+
+  /* Remove pulse */
+  .pulse-glow,
+  .gecx-launcher::before,
+  .gecx-launcher::after {
+    animation: none !important;
+  }
+
+  /* Remove spin */
+  .spin {
+    animation: none !important;
+  }
+
+  /* Remove shimmer — show static gray */
+  .skeleton {
+    animation: none !important;
+    background: var(--stone-light, #F3EDE5) !important;
+  }
+
+  /* Underline: show immediately */
+  .underline-gold::after {
+    transition: none !important;
+  }
+
+  .heading-underline::after {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}

@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events &amp; Weddings — Château de Huot</title>
+  <meta name="description" content="Host your wedding, corporate retreat, or private gala at Château de Huot — the most beautiful venue in Provence. Intimate to 200 guests.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* ── PAGE-SPECIFIC: EVENTS ── */
+
+    /* HERO */
+    .events-hero {
+      position: relative;
+      height: 70vh;
+      min-height: 560px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .events-hero .parallax-img {
+      position: absolute;
+      inset: 0;
+    }
+    .events-hero .parallax-img img {
+      width: 100%;
+      height: 115%;
+      object-fit: cover;
+      object-position: center 30%;
+      transform: translateY(0);
+    }
+    .events-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,12,8,0.88) 0%, rgba(14,12,8,0.45) 50%, rgba(14,12,8,0.2) 100%);
+    }
+    .events-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 0 72px;
+      width: 100%;
+    }
+    .events-hero-content .container {
+      max-width: 800px;
+    }
+    .events-hero-content .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .events-hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .events-hero-content .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+      color: rgba(250,247,242,0.82);
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 36px;
+    }
+
+    /* VENUE SHOWCASE */
+    .venues-section {
+      background: var(--cream);
+      padding: 100px 0;
+    }
+    .venues-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .venue-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .venue-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.13);
+    }
+    .venue-card-img {
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+    .venue-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .venue-card:hover .venue-card-img img {
+      transform: scale(1.06);
+    }
+    .venue-capacity-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(14,12,8,0.72);
+      backdrop-filter: blur(8px);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+    .venue-card-body {
+      padding: 28px 28px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .venue-card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .venue-card-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-bottom: 14px;
+      letter-spacing: 0.03em;
+    }
+    .venue-card-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .venue-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .venue-features li {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .venue-features li::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .venue-card-cta {
+      margin-top: auto;
+    }
+    .btn-venue {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      border: 1.5px solid var(--charcoal);
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: transparent;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+    .btn-venue:hover {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+
+    /* EVENT TYPES */
+    .event-types-section {
+      background: var(--charcoal);
+      padding: 100px 0;
+    }
+    .event-types-section .section-label {
+      color: var(--gold);
+    }
+    .event-types-section h2 {
+      color: var(--cream);
+    }
+    .event-types-section .section-sub {
+      color: rgba(250,247,242,0.65);
+    }
+    .event-types-tabs {
+      display: flex;
+      gap: 0;
+      margin: 48px 0 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .event-tab-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.5);
+      background: none;
+      border: none;
+      padding: 14px 28px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.25s ease;
+    }
+    .event-tab-btn.active,
+    .event-tab-btn:hover {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+    .event-tab-panels {
+      margin-top: 0;
+    }
+    .event-tab-panel {
+      display: none;
+      padding: 56px 0 0;
+    }
+    .event-tab-panel.active {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .event-panel-img {
+      border-radius: 8px;
+      overflow: hidden;
+      height: 380px;
+    }
+    .event-panel-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .event-panel-text .event-panel-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .event-panel-text h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .event-panel-text .event-panel-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .event-panel-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: rgba(250,247,242,0.7);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .event-includes {
+      list-style: none;
+      padding: 0;
+      margin: 24px 0 32px;
+    }
+    .event-includes li {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: rgba(250,247,242,0.65);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .event-includes li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* PRICING TABLE */
+    .pricing-section {
+      background: var(--stone, #f5f2ed);
+      padding: 100px 0;
+    }
+    .pricing-table-wrap {
+      margin-top: 56px;
+      overflow-x: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    }
+    .pricing-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+    .pricing-table thead tr {
+      background: var(--charcoal);
+    }
+    .pricing-table thead th {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.7);
+      padding: 20px 28px;
+      text-align: left;
+    }
+    .pricing-table thead th:first-child {
+      color: var(--cream);
+    }
+    .pricing-table tbody tr {
+      border-bottom: 1px solid #f0ece6;
+      transition: background 0.2s ease;
+    }
+    .pricing-table tbody tr:last-child {
+      border-bottom: none;
+    }
+    .pricing-table tbody tr:hover {
+      background: #faf8f4;
+    }
+    .pricing-table tbody td {
+      padding: 24px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: #555;
+      vertical-align: top;
+    }
+    .pricing-table tbody td:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--charcoal);
+    }
+    .pricing-capacity {
+      display: inline-block;
+      background: rgba(var(--gold-rgb, 197,158,96),0.12);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .pricing-price {
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .pricing-note {
+      margin-top: 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: #888;
+      text-align: center;
+    }
+    .pricing-note strong {
+      color: var(--charcoal);
+    }
+
+    /* INQUIRY FORM */
+    .inquiry-section {
+      background: #fff;
+      padding: 100px 0;
+    }
+    .inquiry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 56px;
+    }
+    .inquiry-intro .section-label {
+      margin-bottom: 16px;
+    }
+    .inquiry-intro h2 {
+      margin-bottom: 20px;
+    }
+    .inquiry-intro p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .inquiry-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      background: rgba(197,158,96,0.08);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      margin-top: 32px;
+    }
+    .inquiry-note p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--charcoal);
+      margin: 0;
+    }
+    .luxury-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      background: #faf8f4;
+      border: 1.5px solid #e8e2d8;
+      border-radius: 6px;
+      padding: 13px 16px;
+      transition: border-color 0.2s ease;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      background: #fff;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .btn-submit {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--charcoal);
+      color: var(--cream);
+      border: none;
+      padding: 16px 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.25s ease;
+      align-self: flex-start;
+    }
+    .btn-submit:hover {
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    /* WEDDINGS FEATURE */
+    .weddings-section {
+      background: var(--cream);
+      padding: 100px 0;
+    }
+    .wedding-feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 56px;
+    }
+    .wedding-img-wrap {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .wedding-img-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      display: block;
+    }
+    .wedding-img-accent {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 200px;
+      height: 200px;
+      background: var(--gold);
+      opacity: 0.12;
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .wedding-text .section-label {
+      margin-bottom: 16px;
+    }
+    .wedding-text h2 {
+      margin-bottom: 20px;
+    }
+    .wedding-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .wedding-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .wedding-option {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      border: 1px solid #e8e2d8;
+    }
+    .wedding-option h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .wedding-option p {
+      font-size: 0.8rem;
+      margin: 0;
+      line-height: 1.6;
+    }
+    .wedding-testimonial {
+      background: var(--charcoal);
+      border-radius: 12px;
+      padding: 32px;
+      margin-top: 36px;
+      position: relative;
+    }
+    .wedding-testimonial::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      line-height: 1;
+      opacity: 0.6;
+    }
+    .wedding-testimonial blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(250,247,242,0.9);
+      line-height: 1.7;
+      margin: 0 0 16px;
+      padding-top: 16px;
+    }
+    .wedding-testimonial cite {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .venues-grid { grid-template-columns: 1fr 1fr; }
+      .event-tab-panel.active { grid-template-columns: 1fr; gap: 36px; }
+      .event-panel-img { height: 280px; }
+      .inquiry-grid { grid-template-columns: 1fr; gap: 48px; }
+      .wedding-feature { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 768px) {
+      .venues-grid { grid-template-columns: 1fr; }
+      .event-types-tabs { flex-wrap: wrap; }
+      .event-tab-btn { padding: 12px 16px; font-size: 0.72rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .pricing-table thead th,
+      .pricing-table tbody td { padding: 16px 16px; }
+      .wedding-options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav-wrapper" id="site-nav">
+    <div class="nav-inner container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-mark">CH</span>
+        <span class="logo-text">Château de Huot</span>
+      </a>
+      <div class="nav-links">
+        <a href="rooms.html" class="nav-link">Rooms &amp; Suites</a>
+        <a href="dining.html" class="nav-link">Dining</a>
+        <a href="spa.html" class="nav-link">Spa</a>
+        <a href="experiences.html" class="nav-link">Experiences</a>
+        <a href="events.html" class="nav-link active">Events</a>
+        <a href="gallery.html" class="nav-link">Gallery</a>
+        <a href="mystay.html" class="nav-link">My Stay</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="nav-cta" data-flow="booking" data-quick="I'd like to reserve a room">Reserve</button>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-menu">
+      <a href="rooms.html">Rooms &amp; Suites</a>
+      <a href="dining.html">Dining</a>
+      <a href="spa.html">Spa</a>
+      <a href="experiences.html">Experiences</a>
+      <a href="events.html">Events</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="mystay.html">My Stay</a>
+      <a href="contact.html">Contact</a>
+      <button class="btn-gold" data-flow="booking" data-quick="I'd like to reserve a room" style="margin-top:16px;width:100%">Reserve Now</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="events-hero">
+    <div class="parallax-img">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&q=85&fit=crop" alt="Grand ballroom at Château de Huot">
+    </div>
+    <div class="events-hero-overlay"></div>
+    <div class="events-hero-content">
+      <div class="container">
+        <p class="hero-eyebrow">Private Events</p>
+        <h1>The most beautiful<br>venue in Provence</h1>
+        <p class="hero-sub">Whether an intimate wedding of 20 or a corporate retreat of 200, Château de Huot provides an unparalleled backdrop and flawless production.</p>
+        <button class="btn-primary" data-flow="events" data-quick="I'd like to enquire about hosting an event at Château de Huot">Enquire Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- VENUE SHOWCASE -->
+  <section class="venues-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Our Venues</p>
+        <h2>Three extraordinary spaces</h2>
+        <p class="section-sub">From a grand historic ballroom to an intimate wine-cellar dining room, each venue at the château offers a distinct and unforgettable setting.</p>
+      </div>
+
+      <div class="venues-grid gsap-stagger">
+        <!-- La Grande Salle -->
+        <div class="venue-card reveal">
+          <div class="venue-card-img">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80&fit=crop" alt="La Grande Salle ballroom">
+            <span class="venue-capacity-badge">Up to 200 guests</span>
+          </div>
+          <div class="venue-card-body">
+            <h3>La Grande Salle</h3>
+            <p class="venue-card-subtitle">The Grand Hall</p>
+            <p class="venue-card-desc">A magnificent 400 sqm historic ballroom with 8-metre ceilings, original stone arches, and floor-to-ceiling windows opening onto the estate gardens. The grandest private event space in the Luberon.</p>
+            <ul class="venue-features">
+              <li>In-house catering team</li>
+              <li>State-of-the-art AV system</li>
+              <li>Private estate entrance</li>
+              <li>Dedicated bridal suite</li>
+            </ul>
+            <div class="venue-card-cta">
+              <button class="btn-venue" data-flow="events" data-quick="I'd like to enquire about La Grande Salle for an event">Enquire for this venue</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terrace Pavilion -->
+        <div class="venue-card reveal">
+          <div class="venue-card-img">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80&fit=crop" alt="The Terrace Pavilion at Château de Huot">
+            <span class="venue-capacity-badge">Up to 60 guests</span>
+          </div>
+          <div class="venue-card-body">
+            <h3>The Terrace Pavilion</h3>
+            <p class="venue-card-subtitle">Alfresco Elegance</p>
+            <p class="venue-card-desc">A glass-roofed terrace pavilion overlooking the lavender fields and the Luberon hills beyond. Ideal for intimate ceremonies, alfresco dinners, and cocktail receptions at the golden hour.</p>
+            <ul class="venue-features">
+              <li>Retractable glass roof</li>
+              <li>Outdoor ceremony space</li>
+              <li>Bespoke ambient lighting</li>
+              <li>Adjacent champagne bar</li>
+            </ul>
+            <div class="venue-card-cta">
+              <button class="btn-venue" data-flow="events" data-quick="I'd like to enquire about the Terrace Pavilion">Enquire for this venue</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Private Dining Room -->
+        <div class="venue-card reveal">
+          <div class="venue-card-img">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80&fit=crop" alt="Private dining room at Château de Huot">
+            <span class="venue-capacity-badge">Up to 24 guests</span>
+          </div>
+          <div class="venue-card-body">
+            <h3>Private Dining Room</h3>
+            <p class="venue-card-subtitle">The Intimate Table</p>
+            <p class="venue-card-desc">A stone-walled private room beneath the château, with a dedicated sommelier, customised tasting menus by Chef Laurent, and direct access to a 12,000-bottle wine cellar curated over three generations.</p>
+            <ul class="venue-features">
+              <li>Chef's table option</li>
+              <li>Wine cellar access</li>
+              <li>Personalised menu</li>
+              <li>Private entrance</li>
+            </ul>
+            <div class="venue-card-cta">
+              <button class="btn-venue" data-flow="events" data-quick="I'd like to enquire about the Private Dining Room">Enquire for this venue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENT TYPES -->
+  <section class="event-types-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label" style="color:var(--gold)">Every Occasion</p>
+        <h2 style="color:var(--cream)">Crafted for your event</h2>
+        <p class="section-sub" style="color:rgba(250,247,242,0.6)">From the most intimate private dinner to a full estate buyout for a gala weekend, our team of dedicated event professionals brings your vision to life.</p>
+      </div>
+
+      <div class="event-types-tabs reveal">
+        <button class="event-tab-btn active" data-tab="weddings">Weddings</button>
+        <button class="event-tab-btn" data-tab="corporate">Corporate Retreats</button>
+        <button class="event-tab-btn" data-tab="dinners">Private Dinners</button>
+        <button class="event-tab-btn" data-tab="galas">Gala Events</button>
+      </div>
+
+      <div class="event-tab-panels">
+        <!-- Weddings -->
+        <div class="event-tab-panel active" id="tab-weddings">
+          <div class="event-panel-img">
+            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80&fit=crop" alt="Wedding ceremony at Château de Huot">
+          </div>
+          <div class="event-panel-text">
+            <p class="event-panel-eyebrow">Weddings</p>
+            <h3>A day as timeless<br>as the château itself</h3>
+            <p class="event-panel-tagline">"The most beautiful backdrop for your most beautiful day."</p>
+            <p>From the ceremony beneath ancient olive trees to the champagne reception in the grand ballroom, every element of your wedding at Château de Huot is orchestrated with the same obsessive care we bring to every guest experience.</p>
+            <p>Our dedicated wedding director accompanies you through every decision — floral design, menu creation, music, lighting — so that on your day, there is nothing to think about but each other.</p>
+            <ul class="event-includes">
+              <li>Dedicated wedding director from first enquiry to final farewell</li>
+              <li>Ceremony and reception in La Grande Salle or the Terrace Pavilion</li>
+              <li>Bespoke tasting menu by Chef Laurent Menier</li>
+              <li>Bridal suite and preparation rooms included</li>
+              <li>Full estate buyout available for weekend weddings</li>
+            </ul>
+            <button class="btn-primary" data-flow="events" data-quick="I'm interested in getting married at Château de Huot">Plan Your Wedding</button>
+          </div>
+        </div>
+
+        <!-- Corporate -->
+        <div class="event-tab-panel" id="tab-corporate">
+          <div class="event-panel-img">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80&fit=crop" alt="Corporate retreat at Château de Huot">
+          </div>
+          <div class="event-panel-text">
+            <p class="event-panel-eyebrow">Corporate Retreats</p>
+            <h3>Inspire, connect,<br>achieve</h3>
+            <p class="event-panel-tagline">"The most productive thinking happens away from the office."</p>
+            <p>Château de Huot transforms the corporate retreat into something truly exceptional. When your leadership team is surrounded by beauty, served Michelin-starred food, and relieved of every logistical concern, the quality of thinking elevates.</p>
+            <p>We provide seamless AV and connectivity throughout the estate, dedicated breakout spaces, and a full team of event coordinators so your team focuses entirely on what matters.</p>
+            <ul class="event-includes">
+              <li>High-speed connectivity and AV throughout all venues</li>
+              <li>Dedicated breakout rooms and boardroom facilities</li>
+              <li>Team building experiences — truffle hunting, vineyards, cookery</li>
+              <li>Executive accommodation packages for all attendees</li>
+              <li>Wellness programming — spa, yoga, morning hikes</li>
+            </ul>
+            <button class="btn-primary" data-flow="events" data-quick="I'm interested in a corporate retreat at Château de Huot">Plan a Retreat</button>
+          </div>
+        </div>
+
+        <!-- Dinners -->
+        <div class="event-tab-panel" id="tab-dinners">
+          <div class="event-panel-img">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&fit=crop" alt="Private dinner at Château de Huot">
+          </div>
+          <div class="event-panel-text">
+            <p class="event-panel-eyebrow">Private Dinners</p>
+            <h3>An evening of<br>extraordinary cuisine</h3>
+            <p class="event-panel-tagline">"A private table. A chef at the height of his art."</p>
+            <p>For the most intimate of occasions — a business dinner, an anniversary, a family celebration — the Private Dining Room offers an experience unlike any restaurant. Chef Laurent Menier designs a bespoke tasting menu for your evening, paired by your personal sommelier from the estate's exceptional cellar.</p>
+            <p>The experience is entirely private, the service invisible until it is needed, and the menu entirely yours to shape.</p>
+            <ul class="event-includes">
+              <li>Bespoke tasting menu designed personally by Chef Laurent</li>
+              <li>Paired wine journey from a 12,000-bottle cellar</li>
+              <li>Personal sommelier and dedicated service team</li>
+              <li>Option for a kitchen tour and chef introduction</li>
+              <li>Available for 8 to 24 guests</li>
+            </ul>
+            <button class="btn-primary" data-flow="dining" data-quick="I'd like to reserve the private dining room">Reserve a Dinner</button>
+          </div>
+        </div>
+
+        <!-- Galas -->
+        <div class="event-tab-panel" id="tab-galas">
+          <div class="event-panel-img">
+            <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80&fit=crop" alt="Gala event at Château de Huot">
+          </div>
+          <div class="event-panel-text">
+            <p class="event-panel-eyebrow">Gala Events</p>
+            <h3>Moments that define<br>an organisation</h3>
+            <p class="event-panel-tagline">"An evening your guests will speak of for years."</p>
+            <p>A full estate buyout of Château de Huot transforms the property into an entirely private world for your organisation. With capacity for up to 200 guests in La Grande Salle and the full estate at your disposal, gala evenings here set a standard that cannot be replicated.</p>
+            <p>Our production team handles every element — entertainment, floristry, lighting design, audiovisual — working alongside your event agency or acting as the sole production partner.</p>
+            <ul class="event-includes">
+              <li>Full estate exclusive buyout options available</li>
+              <li>In-house production team or third-party agency liaison</li>
+              <li>Entertainment and programme design</li>
+              <li>Accommodation for all guests within the estate</li>
+              <li>Arrival experiences — helicopter transfers, private cars</li>
+            </ul>
+            <button class="btn-primary" data-flow="events" data-quick="I'm interested in a gala event at Château de Huot">Enquire About Galas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TABLE -->
+  <section class="pricing-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-label">Investment</p>
+        <h2>Venue hire &amp; pricing</h2>
+        <p class="section-sub">Transparent pricing for venue hire. All-inclusive packages available — our events director will prepare a bespoke proposal for your occasion.</p>
+      </div>
+
+      <div class="pricing-table-wrap reveal">
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Venue</th>
+              <th>Capacity</th>
+              <th>Half-Day Hire</th>
+              <th>Full-Day Hire</th>
+              <th>Includes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>La Grande Salle</td>
+              <td><span class="pricing-capacity">Up to 200</span></td>
+              <td><span class="pricing-price">€8,500</span></td>
+              <td><span class="pricing-price">€15,000</span></td>
+              <td>AV system · Catering team · Private entrance · Bridal suite</td>
+            </tr>
+            <tr>
+              <td>The Terrace Pavilion</td>
+              <td><span class="pricing-capacity">Up to 60</span></td>
+              <td><span class="pricing-price">€4,500</span></td>
+              <td><span class="pricing-price">€8,000</span></td>
+              <td>Ambient lighting · Retractable roof · Outdoor ceremony space</td>
+            </tr>
+            <tr>
+              <td>Private Dining Room</td>
+              <td><span class="pricing-capacity">Up to 24</span></td>
+              <td><span class="pricing-price">€2,500</span></td>
+              <td><span class="pricing-price">€4,500</span></td>
+              <td>Dedicated sommelier · Bespoke menu · Wine cellar access</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pricing-note reveal">All-inclusive packages — catering, floristry, accommodation and entertainment — available upon request. <strong>Contact our events director for a bespoke proposal.</strong></p>
+    </div>
+  </section>
+
+  <!-- INQUIRY FORM -->
+  <section class="inquiry-section">
+    <div class="container">
+      <div class="inquiry-grid">
+        <div class="inquiry-intro reveal">
+          <p class="section-label">Begin Your Journey</p>
+          <h2>Begin your event journey</h2>
+          <p>Every exceptional event at Château de Huot begins with a single conversation. Share the details of your occasion and our events director, Isabelle Moreau, will respond within two hours on weekdays.</p>
+          <p>Whether you have a complete vision or are simply beginning to explore possibilities, we are here to shape something extraordinary together.</p>
+          <div class="inquiry-note">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <p>Our events director responds within 2 hours on weekdays</p>
+          </div>
+        </div>
+
+        <form class="luxury-form reveal" onsubmit="return false;">
+          <div class="form-group">
+            <label for="ev-type">Event type</label>
+            <select id="ev-type" name="event-type">
+              <option value="" disabled selected>Select event type</option>
+              <option>Wedding</option>
+              <option>Corporate Retreat</option>
+              <option>Private Dinner</option>
+              <option>Gala Event</option>
+              <option>Birthday Celebration</option>
+              <option>Other Private Event</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ev-name">Your name</label>
+              <input type="text" id="ev-name" name="name" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label for="ev-email">Email address</label>
+              <input type="email" id="ev-email" name="email" placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ev-date">Preferred date</label>
+              <input type="date" id="ev-date" name="date">
+            </div>
+            <div class="form-group">
+              <label for="ev-guests">Guest count</label>
+              <input type="number" id="ev-guests" name="guests" placeholder="e.g. 80" min="1" max="200">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ev-message">Tell us about your event</label>
+            <textarea id="ev-message" name="message" placeholder="Share your vision, any special requirements, and how we can help make it extraordinary…"></textarea>
+          </div>
+          <button type="button" class="btn-submit" data-flow="events" data-quick="I'd like to inquire about an event at Château de Huot">Submit Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEDDINGS FEATURE -->
+  <section class="weddings-section">
+    <div class="container">
+      <div class="wedding-feature reveal">
+        <div class="wedding-img-wrap">
+          <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80&fit=crop" alt="Wedding ceremony at Château de Huot">
+          <div class="wedding-img-accent"></div>
+        </div>
+
+        <div class="wedding-text">
+          <p class="section-label">Weddings</p>
+          <h2>The château wedding</h2>
+          <p>There are venues, and there is Château de Huot. The ancient stone of the main house, the scent of lavender carried on a warm Provençal breeze, the last light falling golden across the Luberon — no set designer could create what nature and four centuries of careful stewardship have built here.</p>
+          <p>We host a strictly limited number of weddings each year, ensuring that every couple receives the full, undivided attention of our team and the exclusive use of spaces that feel truly their own.</p>
+
+          <div class="wedding-options">
+            <div class="wedding-option">
+              <h4>Ceremony Locations</h4>
+              <p style="color:#666">The olive grove, the terrace, La Grande Salle, or the private chapel — four settings, four entirely different moods.</p>
+            </div>
+            <div class="wedding-option">
+              <h4>Bridal Preparation</h4>
+              <p style="color:#666">A dedicated bridal suite with private bathroom, full-length mirrors, and natural light — available from dawn.</p>
+            </div>
+            <div class="wedding-option">
+              <h4>Estate Buyout</h4>
+              <p style="color:#666">For full weekend weddings, exclusive use of all 24 suites and every venue on the estate.</p>
+            </div>
+            <div class="wedding-option">
+              <h4>Menu by Chef Laurent</h4>
+              <p style="color:#666">A bespoke tasting menu designed around your story, your flavours, your wedding.</p>
+            </div>
+          </div>
+
+          <div class="wedding-testimonial">
+            <blockquote>"We never imagined our wedding could be this perfect. The team at Château de Huot handled every detail — we simply enjoyed being in love."</blockquote>
+            <cite>— Claire &amp; Thomas, Paris · Married June 2025</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-top container">
+      <div class="footer-col footer-brand">
+        <div class="nav-logo" style="margin-bottom:16px">
+          <span class="logo-mark">CH</span>
+          <span class="logo-text" style="color:var(--cream)">Château de Huot</span>
+        </div>
+        <p style="color:rgba(250,247,242,0.6);font-size:0.9rem;line-height:1.7">An intimate luxury estate in the heart of Provence. 24 suites. Two Michelin stars. One unforgettable experience.</p>
+        <div class="gecx-badge">Powered by <strong>GECX</strong></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">The Estate</h4>
+        <nav class="footer-nav">
+          <a href="rooms.html">Rooms &amp; Suites</a>
+          <a href="dining.html">Dining</a>
+          <a href="spa.html">Spa &amp; Wellness</a>
+          <a href="experiences.html">Experiences</a>
+          <a href="events.html">Events &amp; Weddings</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="mystay.html">My Stay</a>
+        </nav>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Contact</h4>
+        <address class="footer-address">
+          <p>Route de Gordes<br>84220 Roussillon<br>Provence, France</p>
+          <p>+33 4 90 XX XX XX</p>
+          <p>concierge@chateaudehuot.com</p>
+        </address>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-heading">Discover</h4>
+        <nav class="footer-nav">
+          <a href="contact.html">Getting Here</a>
+          <a href="#" data-flow="support" data-quick="Tell me about your loyalty programme">Loyalty Programme</a>
+          <a href="#" data-flow="support" data-quick="What is your cancellation policy?">Policies</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>© 2026 Château de Huot. All rights reserved.</p>
+      <p>Privacy Policy · Terms &amp; Conditions</p>
+    </div>
+  </footer>
+
+  <button class="chat-launcher" id="chat-launcher" aria-label="Open concierge chat">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <span>Concierge</span>
+  </button>
+  <div class="chat-panel" id="chat-panel" aria-hidden="true" role="dialog">
+    <div class="chat-header">
+      <div class="chat-header-brand">
+        <div class="chat-avatar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="chat-header-info">
+          <span class="chat-hotel-name">Château de Huot</span>
+          <span class="chat-status"><span class="status-dot"></span>Personal Concierge</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="chat-quick-chips">
+      <button data-flow="booking" data-quick="I'd like to reserve a suite" class="quick-chip">Reserve a suite</button>
+      <button data-flow="dining" data-quick="Book dinner for two" class="quick-chip">Book dinner</button>
+      <button data-flow="spa" data-quick="I'd like a spa treatment" class="quick-chip">Spa treatments</button>
+      <button data-flow="concierge" data-quick="What should I do today?" class="quick-chip">Plan my day</button>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg-bot"><p>Good evening. I am Élise, your personal concierge at Château de Huot. How may I make your stay exceptional today?</p></div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Ask anything…" autocomplete="off">
+      <button id="chat-send" class="chat-send-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/demo-flows.js"></script>
+  <script src="js/chat-engine.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/demo-controls.js"></script>
+  <script>
+    // Event type tabs
+    document.querySelectorAll('.event-tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var tab = this.dataset.tab;
+        document.querySelectorAll('.event-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.event-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        this.classList.add('active');
+        var panel = document.getElementById('tab-' + tab);
+        if (panel) panel.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
