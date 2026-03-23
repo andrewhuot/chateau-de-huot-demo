@@ -749,13 +749,21 @@
    -------------------------------------------------------------------------- */
 
 .testimonial-card {
-  background-color: var(--stone-light, #F3EDE5);
+  background-color: rgba(250, 247, 242, 0.08);
+  border: 1px solid rgba(201, 169, 110, 0.15);
+  backdrop-filter: blur(8px);
   border-radius: var(--radius, 12px);
   padding: 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
+  transition: border-color 300ms ease, background-color 300ms ease;
+}
+
+.testimonial-card:hover {
+  border-color: rgba(201, 169, 110, 0.35);
+  background-color: rgba(250, 247, 242, 0.12);
 }
 
 .testimonial-card::before {

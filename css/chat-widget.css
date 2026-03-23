@@ -9,7 +9,7 @@
 
 /* Widen the chat panel for better widget breathing room */
 .chat-panel {
-  width: 480px !important;
+  width: 460px !important;
 }
 
 /* More polished widget label — Cormorant italic instead of all-caps Inter */
@@ -2745,7 +2745,7 @@
 .chat-avatar { width: 36px; height: 36px; border-radius: 10px; background: rgba(201,169,110,0.2); display: flex; align-items: center; justify-content: center; color: var(--gold); border: 1px solid rgba(201,169,110,0.3); }
 .chat-header-info { display: flex; flex-direction: column; }
 .chat-hotel-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--cream); font-weight: 500; line-height: 1.2; }
-.chat-status { font-size: 0.72rem; color: rgba(250,247,242,0.55); letter-spacing: 0.04em; display: flex; align-items: center; gap: 0; }
+.chat-status { font-size: 0.72rem; color: rgba(250,247,242,0.55); letter-spacing: 0.04em; display: flex; align-items: center; gap: 6px; }
 .chat-close { background: rgba(255,255,255,0.1); border: none; color: var(--cream); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 240ms ease, transform 240ms ease; }
 .chat-close:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 
@@ -3035,7 +3035,7 @@
 /* --------------------------------------------------------------------------
    Chat Panel — Wider
    -------------------------------------------------------------------------- */
-.chat-panel { width: 440px; }
+/* width set via !important override at top of file */
 
 /* --------------------------------------------------------------------------
    Message Timestamps
@@ -3075,8 +3075,8 @@
    -------------------------------------------------------------------------- */
 .btn-gold:hover, .btn-gold-sm:hover, .btn-navy:hover { transform: scale(1.02); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
 
-/* Card tilt on hover */
-.room-card:hover, .spa-card:hover, .exp-card:hover { transform: perspective(800px) rotateY(-2deg) translateY(-2px); }
+/* Card lift on hover — subtle, elegant */
+.spa-card:hover, .exp-card:hover { transform: translateY(-3px); }
 
 /* Success checkmark draw animation */
 @keyframes checkDraw { to { stroke-dashoffset: 0; } }

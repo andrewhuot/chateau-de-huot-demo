@@ -593,15 +593,15 @@ const Widgets = {
       { value: 'suite', label: 'Suite', img: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=70&fit=crop' },
       { value: 'villa', label: 'Villa', img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=70&fit=crop' },
       { value: 'loft', label: 'Loft', img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=70&fit=crop' },
-      { value: 'spa', label: 'Spa', img: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=600&q=70&fit=crop' },
+      { value: 'spa', label: 'Spa', img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=70&fit=crop' },
       { value: 'restaurant', label: 'Restaurant', img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=70&fit=crop' },
     ];
     const hotspots = [
-      { label: 'Pool Terrace', top: '25%', left: '70%', desc: 'Heated infinity pool with panoramic valley views.', thumb: 'https://images.unsplash.com/photo-1572331165267-854da2b021b1?w=120&q=60&fit=crop' },
+      { label: 'Pool Terrace', top: '25%', left: '70%', desc: 'Heated infinity pool with panoramic valley views.', thumb: 'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=120&q=60&fit=crop' },
       { label: 'Suite Interior', top: '40%', left: '20%', desc: 'King-size bed, marble bath, private balcony.', thumb: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=120&q=60&fit=crop' },
       { label: 'Garden', top: '65%', left: '55%', desc: 'Manicured French gardens with lavender walkways.', thumb: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=120&q=60&fit=crop' },
       { label: 'Dining Room', top: '30%', left: '45%', desc: 'Two-Michelin-star restaurant seating 40 guests.', thumb: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=120&q=60&fit=crop' },
-      { label: 'Spa', top: '60%', left: '25%', desc: 'Full-service spa with sauna, hammam, and treatment rooms.', thumb: 'https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=120&q=60&fit=crop' },
+      { label: 'Spa', top: '60%', left: '25%', desc: 'Full-service spa with sauna, hammam, and treatment rooms.', thumb: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=120&q=60&fit=crop' },
     ];
     return `
       <div class="w-virtual-tour">
